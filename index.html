@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanity Fair Italia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f8f8;
+        }
+
+        .header {
+            background: white;
+            padding: 10px 20px;
+            border-bottom: 2px solid #d32f2f;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #d32f2f;
+            text-decoration: none;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-icons a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-main {
+            background: #222;
+            padding: 10px 0;
+        }
+
+        .nav-main ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .nav-main a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .nav-main a:hover {
+            background: #d32f2f;
+        }
+
+        .search-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            outline: none;
+        }
+
+        #searchInput:focus {
+            border-color: #d32f2f;
+        }
+
+        .articoli-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 25px;
+        }
+
+        .articolo-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .articolo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .articolo-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .articolo-content {
+            padding: 20px;
+        }
+
+        .categoria {
+            display: inline-block;
+            background: #d32f2f;
+            color: white;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        .articolo-titolo {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            line-height: 1.3;
+            color: #222;
+        }
+
+        .articolo-sottotitolo {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #888;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .articoli-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .nav-main ul {
+                gap: 15px;
+            }
+            
+            .header-top {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-top">
+            <a href="#" class="logo">V A N I T Y&nbsp;F A I R</a>
+            <div class="nav-icons">
+                <a href="#">Italia</a>
+                <a href="#">Newsletter</a>
+            </div>
+        </div>
+        <nav class="nav-main">
+            <ul>
+                <li><a href="#">Giornalismo</a></li>
+                <li><a href="#">People</a></li>
+                <li><a href="#">Show News</a></li>
+                <li><a href="#">Beauty & Health</a></li>
+                <li><a href="#">Fashion</a></li>
+                <li><a href="#">Lifestyle</a></li>
+                <li><a href="#">Food & Travel</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- SEARCH & ARTICOLI -->
+    <main class="search-container">
+        <input type="text" id="searchInput" placeholder="🔍 Cerca tra gli articoli di Vanity Fair Italia...">
+        <div id="articoli-container" class="articoli-grid">
+            <!-- Articoli caricati dinamicamente -->
+        </div>
+    </main>
+
+    <script>
+        // DATI ARTICOLI EMBED (per demo locale, altrimenti usa articoli.json)
+        const articoliData = [
+            {
+                id: 1,
+                categoria: "Attualità",
+                titolo: "Attualità Sofia",
+                sottotitolo: "Il fatto di Sofia Fontanella usa Italia Barbie Lisette",
+                autore: "Chiara Ferragni",
+                data: "14 Gennaio 2026",
+                immagine: "https://via.placeholder.com/400x250/d32f2f/ffffff?text=Sofia+Fontanella",
+                estratto: "Sotto pres cu dei le nostri cond oson pre no men tra."
+            },
+            {
+                id: 2,
+                categoria: "Attualità",
+                titolo: "Attualità Sofia",
+                sottotitolo: "Labrie con-mio fuglio ne usa le antriesa più lambine in a fatti con i propri",
+                autore: "Di Monica Covello",
+                data: "14 Gennaio 2026",
+                immagine: "https://via.placeholder.com/400x250/222/ffffff?text=Labrie",
+                estratto: "Di Stefania Saltalamacchia 14 Genna io 2026."
+            },
+            {
+                id: 3,
+                categoria: "People",
+                titolo: "Chiara Ferragni assoluta per felice",
+                sottotitolo: "Devo ringraziare tutte le persone che mi sono state vicine in questi momenti",
+                autore: "Chiara Ferragni",
+                data: "14 Gennaio 2026",
+                immagine: "https://via.placeholder.com/400x250/ff6b6b/ffffff?text=Chiara+Ferragni",
+                estratto: "Tramite un post sui social."
+            },
+            {
+                id: 4,
+                categoria: "Fashion",
+                titolo: "Stefania Saltalamacchia",
+                sottotitolo: "Il fatto di Cronaca rosa",
+                autore: "Vanity Fair Italia",
+                data: "14 Gennaio 2026",
+                immagine: "https://via.placeholder.com/400x250/e74c3c/ffffff?text=Fashion",
+                estratto: "Giornalismo di inchiesta."
+            },
+            {
+                id: 5,
+                categoria: "Beauty",
+                titolo: "Monica Covello",
+                sottotitolo: "Beauty & Health update",
+                autore: "Monica Covello",
+                data: "14 Gennaio 2026",
+                immagine: "https://via.placeholder.com/400x250/f39c12/ffffff?text=Beauty",
+                estratto: "Nuovi trend bellezza."
+            }
+        ];
+
+        function displayArticoli(articoli) {
+            const container = document.getElementById('articoli-container');
+            
+            if (articoli.length === 0) {
+                container.innerHTML = '<div class="no-results">Nessun articolo trovato. Prova con altre parole chiave.</div>';
+                return;
+            }
+            
+            container.innerHTML = articoli.map(articolo => `
+                <article class="articolo-card">
+                    <img src="${articolo.immagine}" alt="${articolo.titolo}" class="articolo-img">
+                    <div class="articolo-content">
+                        <span class="categoria">${articolo.categoria}</span>
+                        <h3 class="articolo-titolo">${articolo.titolo}</h3>
+                        <p class="articolo-sottotitolo">${articolo.sottotitolo}</p>
+                        <div class="meta">
+                            <span>${articolo.autore}</span>
+                            <span>${articolo.data}</span>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        // Inizializza
+        displayArticoli(articoliData);
+
+        // Ricerca live
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            const filtered = articoliData.filter(articolo =>
+                articolo.titolo.toLowerCase().includes(query) ||
+                articolo.categoria.toLowerCase().includes(query) ||
+                articolo.autore.toLowerCase().includes(query) ||
+                articolo.sottotitolo.toLowerCase().includes(query)
+            );
+            displayArticoli(filtered);
+        });
+    </script>
+</body>
+</html>
