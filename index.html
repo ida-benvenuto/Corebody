@@ -3,318 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vanity Fair Italia</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Georgia', serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f8f8f8;
-        }
-
-        .header {
-            background: white;
-            padding: 10px 20px;
-            border-bottom: 2px solid #d32f2f;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: #d32f2f;
-            text-decoration: none;
-        }
-
-        .nav-icons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .nav-icons a {
-            color: #666;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .nav-main {
-            background: #222;
-            padding: 10px 0;
-        }
-
-        .nav-main ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-
-        .nav-main a {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            padding: 8px 12px;
-            border-radius: 4px;
-            transition: background 0.3s;
-        }
-
-        .nav-main a:hover {
-            background: #d32f2f;
-        }
-
-        .search-container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-
-        #searchInput {
-            width: 100%;
-            padding: 15px;
-            font-size: 18px;
-            border: 2px solid #ddd;
-            border-radius: 25px;
-            margin-bottom: 30px;
-            outline: none;
-        }
-
-        #searchInput:focus {
-            border-color: #d32f2f;
-        }
-
-        .articoli-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 25px;
-        }
-
-        .articolo-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-
-        .articolo-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .articolo-img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-
-        .articolo-content {
-            padding: 20px;
-        }
-
-        .categoria {
-            display: inline-block;
-            background: #d32f2f;
-            color: white;
-            padding: 6px 12px;
-            font-size: 12px;
-            font-weight: bold;
-            border-radius: 20px;
-            margin-bottom: 10px;
-        }
-
-        .articolo-titolo {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            line-height: 1.3;
-            color: #222;
-        }
-
-        .articolo-sottotitolo {
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-
-        .meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-            color: #888;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-        }
-
-        .no-results {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 40px;
-            color: #666;
-            font-size: 18px;
-        }
-
-        @media (max-width: 768px) {
-            .articoli-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .nav-main ul {
-                gap: 15px;
-            }
-            
-            .header-top {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-    </style>
+    <title>Home</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
-    <!-- HEADER -->
-    <header class="header">
-        <div class="header-top">
-            <a href="#" class="logo">V A N I T Y&nbsp;F A I R</a>
-            <div class="nav-icons">
-                <a href="#">Italia</a>
-                <a href="#">Newsletter</a>
-            </div>
+    <!-- Overlay per chiudere il menu -->
+    <div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+    <!-- Pannello risultati ricerca -->
+    <div id="searchResultsPanel" class="search-results-panel">
+        <h3>Risultati ricerca</h3>
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <!-- Menu Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Cerca tra gli articoli..." onkeyup="searchArticles()">
+            <img src="immagini/icons8-ricerca-60.png" alt="cerca" class="search-icon" onclick="toggleSearch()">
         </div>
-        <nav class="nav-main">
-            <ul>
-                <li><a href="#">Giornalismo</a></li>
-                <li><a href="#">People</a></li>
-                <li><a href="#">Show News</a></li>
-                <li><a href="#">Beauty & Health</a></li>
-                <li><a href="#">Fashion</a></li>
-                <li><a href="#">Lifestyle</a></li>
-                <li><a href="#">Food & Travel</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- SEARCH & ARTICOLI -->
-    <main class="search-container">
-        <input type="text" id="searchInput" placeholder="🔍 Cerca tra gli articoli di Vanity Fair Italia...">
-        <div id="articoli-container" class="articoli-grid">
-            <!-- Articoli caricati dinamicamente -->
+        <a href="#">FASHION</a>
+        <a href="#">BEAUTY AND WELLNESS</a>
+        <a href="#">ART</a>
+        <a href="#">SHOP</a>
+        <div class="basso">
+        <a href="#">ABOUT</a>
+        <a href="#">SUBMISSION</a>
+        <a href="#">CONTACT</a>
         </div>
-    </main>
+    </div>
 
-    <script>
-        // DATI ARTICOLI EMBED (per demo locale, altrimenti usa articoli.json)
-        const articoliData = [
-            {
-                id: 1,
-                categoria: "Attualità",
-                titolo: "Attualità Sofia",
-                sottotitolo: "Il fatto di Sofia Fontanella usa Italia Barbie Lisette",
-                autore: "Chiara Ferragni",
-                data: "14 Gennaio 2026",
-                immagine: "https://via.placeholder.com/400x250/d32f2f/ffffff?text=Sofia+Fontanella",
-                estratto: "Sotto pres cu dei le nostri cond oson pre no men tra."
-            },
-            {
-                id: 2,
-                categoria: "Attualità",
-                titolo: "Attualità Sofia",
-                sottotitolo: "Labrie con-mio fuglio ne usa le antriesa più lambine in a fatti con i propri",
-                autore: "Di Monica Covello",
-                data: "14 Gennaio 2026",
-                immagine: "https://via.placeholder.com/400x250/222/ffffff?text=Labrie",
-                estratto: "Di Stefania Saltalamacchia 14 Genna io 2026."
-            },
-            {
-                id: 3,
-                categoria: "People",
-                titolo: "Chiara Ferragni assoluta per felice",
-                sottotitolo: "Devo ringraziare tutte le persone che mi sono state vicine in questi momenti",
-                autore: "Chiara Ferragni",
-                data: "14 Gennaio 2026",
-                immagine: "https://via.placeholder.com/400x250/ff6b6b/ffffff?text=Chiara+Ferragni",
-                estratto: "Tramite un post sui social."
-            },
-            {
-                id: 4,
-                categoria: "Fashion",
-                titolo: "Stefania Saltalamacchia",
-                sottotitolo: "Il fatto di Cronaca rosa",
-                autore: "Vanity Fair Italia",
-                data: "14 Gennaio 2026",
-                immagine: "https://via.placeholder.com/400x250/e74c3c/ffffff?text=Fashion",
-                estratto: "Giornalismo di inchiesta."
-            },
-            {
-                id: 5,
-                categoria: "Beauty",
-                titolo: "Monica Covello",
-                sottotitolo: "Beauty & Health update",
-                autore: "Monica Covello",
-                data: "14 Gennaio 2026",
-                immagine: "https://via.placeholder.com/400x250/f39c12/ffffff?text=Beauty",
-                estratto: "Nuovi trend bellezza."
-            }
-        ];
-
-        function displayArticoli(articoli) {
-            const container = document.getElementById('articoli-container');
+    <main>
+        <immagine_iniziale>
+            <nav>
+                <ul>
+                    <destra>
+                        <img id="menuIcon" src="immagini/icons8-menu-50.png" alt="menu" style="height: 30px; width: 30px;" onclick="openMenu()">
+                    </destra>
+                    <sinistra>
+                        <a href="https://www.instagram.com" target="_blank"><img src="immagini/icons8-instagram-48.png" alt="instagram"></a>
+                        <a href="https://www.tiktok.com" target="_blank"><img src="immagini/icons8-tiktok.png" alt="tiktok"></a>
+                        <a href="https://www.pinterest.com" target="_blank"><img src="immagini/icons8-pinterest-50.png" alt="pinterest"></a>
+                    </sinistra>
+                </ul>
+            </nav>
+            <img src="immagini/imma-instagram-1548329109.jpg.avif" alt="Immagine Iniziale">
+            <span class="titolo">Corebody</span>
+        </immagine_iniziale>
+        <section class="latest-section">
+            <h1 class="latest-title">LATEST</h1>
             
-            if (articoli.length === 0) {
-                container.innerHTML = '<div class="no-results">Nessun articolo trovato. Prova con altre parole chiave.</div>';
-                return;
-            }
-            
-            container.innerHTML = articoli.map(articolo => `
-                <article class="articolo-card">
-                    <img src="${articolo.immagine}" alt="${articolo.titolo}" class="articolo-img">
-                    <div class="articolo-content">
-                        <span class="categoria">${articolo.categoria}</span>
-                        <h3 class="articolo-titolo">${articolo.titolo}</h3>
-                        <p class="articolo-sottotitolo">${articolo.sottotitolo}</p>
-                        <div class="meta">
-                            <span>${articolo.autore}</span>
-                            <span>${articolo.data}</span>
-                        </div>
+            <div class="articles-grid">
+                <!-- Card 1 - Fashion -->
+                <article class="article-card">
+                    <img src="immagini/imma-instagram-1548329109.jpg.avif" alt="Fashion" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-category">FASHION</h3>
+                        <p class="article-date">17 gennaio 2023</p>
+                        <h2 class="article-title">Titolo dell'articolo</h2>
+                        <p class="article-text">Anis dolut et voluptas eos imet audis dolomet, vimi fugiae eaturi aut dignetur pelit et delor sum qui blanto quunt lique nimamet molupta aut exerenim volecia cum explit laborio odi dit et atpe maioneque enis que simpore heniet fugiam alis eum eate non nonsedi aeribus. Luptat volotis uscenis eatin pe volorequis perro eum quodis laeruento conseque</p>
                     </div>
                 </article>
-            `).join('');
+
+                <!-- Card 2 - Fashion -->
+                <article class="article-card">
+                    <img src="immagini/imma-instagram-1548329109.jpg.avif" alt="Fashion" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-category">FASHION</h3>
+                        <p class="article-date">17 gennaio 2023</p>
+                        <h2 class="article-title">Titolo dell'articolo</h2>
+                        <p class="article-text">Anis dolut et voluptas eos imet audis dolomet, vimi fugiae eaturi aut dignetur pelit et delor sum qui blanto quunt lique nimamet molupta aut exerenim volecia cum explit laborio odi dit et atpe maioneque enis que simpore heniet fugiam alis eum eate non nonsedi aeribus. Luptat volotis uscenis eatin pe volorequis perro eum quodis laeruento conseque</p>
+                    </div>
+                </article>
+
+                <!-- Card 3 - Beauty -->
+                <article class="article-card">
+                    <img src="immagini/imma-instagram-1548329109.jpg.avif" alt="Beauty" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-category">BEAUTY</h3>
+                        <p class="article-date">17 gennaio 2023</p>
+                        <h2 class="article-title">Titolo dell'articolo</h2>
+                        <p class="article-text">Anis dolut et voluptas eos imet audis dolomet, vimi fugiae eaturi aut dignetur pelit et delor sum qui blanto quunt lique nimamet molupta aut exerenim volecia cum explit laborio odi dit et atpe maioneque enis que simpore heniet fugiam alis eum eate non nonsedi aeribus. Luptat volotis uscenis eatin pe volorequis perro eum quodis laeruento conseque</p>
+                    </div>
+                </article>
+
+                <!-- Card 4 - Art -->
+                <article class="article-card">
+                    <img src="immagini/imma-instagram-1548329109.jpg.avif" alt="Art" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-category">ART</h3>
+                        <p class="article-date">17 gennaio 2023</p>
+                        <h2 class="article-title">Titolo dell'articolo</h2>
+                        <p class="article-text">Anis dolut et voluptas eos imet audis dolomet, vimi fugiae eaturi aut dignetur pelit et delor sum qui blanto quunt lique nimamet molupta aut exerenim volecia cum explit laborio odi dit et atpe maioneque enis que simpore heniet fugiam alis eum eate non nonsedi aeribus. Luptat volotis uscenis eatin pe volorequis perro eum quodis laeruento conseque</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <section class="chiusa">
+            <div class="sezione_finale">
+            <div class="scritta_centro">
+                Corebody
+            <div class="basso">
+                <a href="#">ABOUT</a>
+                <a href="#">SUBMISSION</a>
+                <a href="#">CONTACT</a>
+                </div>
+            </div>
+            <div class="sotto" >
+                        <a href="https://www.instagram.com" target="_blank"><img src="immagini/icons8-instagram-48.png" alt="instagram"></a>
+                        <a href="https://www.tiktok.com" target="_blank"><img src="immagini/icons8-tiktok.png" alt="tiktok"></a>
+                        <a href="https://www.pinterest.com" target="_blank"><img src="immagini/icons8-pinterest-50.png" alt="pinterest"></a>
+            </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Corebody. Tutti i diritti riservati.</p>
+    </footer>
+    </main>
+<script>
+    function openMenu() {
+    document.getElementById("sidebar").style.width = "350px";
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("menuIcon").style.opacity = "0";
+}
+
+function closeMenu() {
+    document.getElementById("sidebar").style.width = "0";
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("menuIcon").style.opacity = "1";
+    // Chiudi anche la ricerca quando si chiude il menu
+    document.getElementById("searchInput").style.display = "none";
+    document.getElementById("searchInput").value = "";
+    document.getElementById("searchResults").innerHTML = "";
+    document.getElementById("searchResultsPanel").style.display = "none";
+}
+
+function toggleSearch() {
+    var searchInput = document.getElementById("searchInput");
+    var resultsPanel = document.getElementById("searchResultsPanel");
+    if (searchInput.style.display === "none" || searchInput.style.display === "") {
+        searchInput.style.display = "block";
+        searchInput.focus();
+    } else {
+        searchInput.style.display = "none";
+        searchInput.value = "";
+        document.getElementById("searchResults").innerHTML = "";
+        resultsPanel.style.display = "none";
+    }
+}
+
+function searchArticles() {
+    var input = document.getElementById("searchInput").value.toLowerCase();
+    var resultsContainer = document.getElementById("searchResults");
+    var resultsPanel = document.getElementById("searchResultsPanel");
+    resultsContainer.innerHTML = "";
+    
+    if (input.length < 2) {
+        resultsPanel.style.display = "none";
+        return;
+    }
+    
+    // Mostra il pannello dei risultati
+    resultsPanel.style.display = "block";
+    
+    // Cerca negli articoli della pagina
+    var articles = document.querySelectorAll(".article-card");
+    var found = false;
+    
+    articles.forEach(function(article) {
+        var title = article.querySelector(".article-title").textContent.toLowerCase();
+        var category = article.querySelector(".article-category").textContent.toLowerCase();
+        var text = article.querySelector(".article-text").textContent.toLowerCase();
+        
+        if (title.includes(input) || category.includes(input) || text.includes(input)) {
+            found = true;
+            var resultItem = document.createElement("a");
+            resultItem.href = "#";
+            resultItem.className = "search-result-item";
+            resultItem.textContent = article.querySelector(".article-title").textContent + " (" + article.querySelector(".article-category").textContent + ")";
+            resultItem.onclick = function() {
+                closeMenu();
+                article.scrollIntoView({ behavior: 'smooth' });
+            };
+            resultsContainer.appendChild(resultItem);
         }
-
-        // Inizializza
-        displayArticoli(articoliData);
-
-        // Ricerca live
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            const filtered = articoliData.filter(articolo =>
-                articolo.titolo.toLowerCase().includes(query) ||
-                articolo.categoria.toLowerCase().includes(query) ||
-                articolo.autore.toLowerCase().includes(query) ||
-                articolo.sottotitolo.toLowerCase().includes(query)
-            );
-            displayArticoli(filtered);
-        });
-    </script>
+    });
+    
+    if (!found && input.length >= 2) {
+        resultsContainer.innerHTML = "<p class='no-results'>Nessun risultato trovato</p>";
+    }
+}
+</script>
 </body>
 </html>
