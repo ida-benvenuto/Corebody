@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risultati ricerca - Corebody</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/home.css">
+    <style>
+        .search-page {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .search-page h1 {
+            font-family: serif;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        
+        .search-page .search-query {
+            color: #666;
+            font-style: italic;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 1024px) {
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="search-page">
+        <a href="prova.html" class="back-link">← Torna alla home</a>
+        <h1>Risultati per: <span class="search-query" id="queryDisplay"></span></h1>
+        <div class="results-grid" id="resultsGrid">
+            <!-- I risultati verranno inseriti qui -->
+        </div>
+        <p id="noResults" style="display: none;">Nessun risultato trovato.</p>
+    </div>
+
+    <script>
+        // Ottieni i dati dalla localStorage
+        var articlesData = JSON.parse(localStorage.getItem('searchResults') || '[]');
+        var query = localStorage.getItem('searchQuery') || '';
+        
+        document.getElementById('queryDisplay').textContent = query;
+        
+        var resultsGrid = document.getElementById('resultsGrid');
+        
+        if (articlesData.length > 0) {
+            articlesData.forEach(function(article) {
+                var card = document.createElement('article');
+                card.className = 'article-card';
+                card.style.cursor = 'pointer';
+                card.onclick = function() {
+                    window.location = 'articolo.html?id=' + article.id;
+                };
+                card.innerHTML = 
+                    '<img src="' + article.immagine + '" alt="' + article.categoria + '" class="article-image">' +
+                    '<div class="article-content">' +
+                        '<h3 class="article-category">' + article.categoria + '</h3>' +
+                        '<p class="article-date">' + article.data + '</p>' +
+                        '<h2 class="article-title">' + article.titolo + '</h2>' +
+                        '<p class="article-text">' + article.anteprima + '</p>' +
+                    '</div>';
+                resultsGrid.appendChild(card);
+            });
+        } else {
+            document.getElementById('noResults').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

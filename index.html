@@ -11,18 +11,13 @@
     <!-- Overlay per chiudere il menu -->
     <div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
-    <!-- Pannello risultati ricerca -->
-    <div id="searchResultsPanel" class="search-results-panel">
-        <h3>Risultati ricerca</h3>
-        <div id="searchResults" class="search-results"></div>
-    </div>
-
     <!-- Menu Sidebar -->
     <div id="sidebar" class="sidebar">
         <div class="search-container">
             <input type="text" id="searchInput" class="search-input" placeholder="Cerca tra gli articoli..." onkeyup="searchArticles()">
             <img src="immagini/icons8-ricerca-60.png" alt="cerca" class="search-icon" onclick="toggleSearch()">
         </div>
+        <div id="searchResults" class="search-results"></div>
         <a href="#">FASHION</a>
         <a href="#">BEAUTY AND WELLNESS</a>
         <a href="#">ART</a>
@@ -54,50 +49,8 @@
         <section class="latest-section">
             <h1 class="latest-title">LATEST</h1>
             
-            <div class="articles-grid">
-                <!-- Card 1 - Fashion -->
-                <article class="article-card">
-                    <img src="immagini/imma-instagram-1548329109.jpg.avif" alt="Fashion" class="article-image">
-                    <div class="article-content">
-                        <h3 class="article-category">FASHION</h3>
-                        <p class="article-date">17 gennaio 2023</p>
-                        <h2 class="article-title">Titolo dell'articolo</h2>
-                        <p class="article-text">Anis dolut et voluptas eos imet audis dolomet, vimi fugiae eaturi aut dignetur pelit et delor sum qui blanto quunt lique nimamet molupta aut exerenim volecia cum explit laborio odi dit et atpe maioneque enis que simpore heniet fugiam alis eum eate non nonsedi aeribus. Luptat volotis uscenis eatin pe volorequis perro eum quodis laeruento conseque</p>
-                    </div>
-                </article>
-
-                <!-- Card 2 - Fashion -->
-                <article class="article-card">
-                    <img src="immagini/imma-instagram-1548329109.jpg.avif" alt="Fashion" class="article-image">
-                    <div class="article-content">
-                        <h3 class="article-category">FASHION</h3>
-                        <p class="article-date">17 gennaio 2023</p>
-                        <h2 class="article-title">Titolo dell'articolo</h2>
-                        <p class="article-text">Anis dolut et voluptas eos imet audis dolomet, vimi fugiae eaturi aut dignetur pelit et delor sum qui blanto quunt lique nimamet molupta aut exerenim volecia cum explit laborio odi dit et atpe maioneque enis que simpore heniet fugiam alis eum eate non nonsedi aeribus. Luptat volotis uscenis eatin pe volorequis perro eum quodis laeruento conseque</p>
-                    </div>
-                </article>
-
-                <!-- Card 3 - Beauty -->
-                <article class="article-card">
-                    <img src="immagini/imma-instagram-1548329109.jpg.avif" alt="Beauty" class="article-image">
-                    <div class="article-content">
-                        <h3 class="article-category">BEAUTY</h3>
-                        <p class="article-date">17 gennaio 2023</p>
-                        <h2 class="article-title">Titolo dell'articolo</h2>
-                        <p class="article-text">Anis dolut et voluptas eos imet audis dolomet, vimi fugiae eaturi aut dignetur pelit et delor sum qui blanto quunt lique nimamet molupta aut exerenim volecia cum explit laborio odi dit et atpe maioneque enis que simpore heniet fugiam alis eum eate non nonsedi aeribus. Luptat volotis uscenis eatin pe volorequis perro eum quodis laeruento conseque</p>
-                    </div>
-                </article>
-
-                <!-- Card 4 - Art -->
-                <article class="article-card">
-                    <img src="immagini/imma-instagram-1548329109.jpg.avif" alt="Art" class="article-image">
-                    <div class="article-content">
-                        <h3 class="article-category">ART</h3>
-                        <p class="article-date">17 gennaio 2023</p>
-                        <h2 class="article-title">Titolo dell'articolo</h2>
-                        <p class="article-text">Anis dolut et voluptas eos imet audis dolomet, vimi fugiae eaturi aut dignetur pelit et delor sum qui blanto quunt lique nimamet molupta aut exerenim volecia cum explit laborio odi dit et atpe maioneque enis que simpore heniet fugiam alis eum eate non nonsedi aeribus. Luptat volotis uscenis eatin pe volorequis perro eum quodis laeruento conseque</p>
-                    </div>
-                </article>
+            <div class="articles-grid" id="articlesGrid">
+                <!-- Articoli caricati dinamicamente dal JSON -->
             </div>
         </section>
         <section class="chiusa">
@@ -124,7 +77,33 @@
     </footer>
     </main>
 <script>
-    function openMenu() {
+// Variabile globale per gli articoli
+var articoliData = [];
+
+// Carica gli articoli dal JSON
+fetch('articoli.json')
+    .then(response => response.json())
+    .then(articoli => {
+        articoliData = articoli;
+        var grid = document.getElementById('articlesGrid');
+        
+        articoli.forEach(function(art) {
+            grid.innerHTML += `
+                <article class="article-card" data-id="${art.id}" onclick="window.location='articolo.html?id=${art.id}'" style="cursor: pointer;">
+                    <img src="${art.immagine}" alt="${art.categoria}" class="article-image">
+                    <div class="article-content">
+                        <h3 class="article-category">${art.categoria}</h3>
+                        <p class="article-date">${art.data}</p>
+                        <h2 class="article-title">${art.titolo}</h2>
+                        <p class="article-text">${art.anteprima}</p>
+                    </div>
+                </article>
+            `;
+        });
+    })
+    .catch(error => console.error('Errore nel caricamento degli articoli:', error));
+
+function openMenu() {
     document.getElementById("sidebar").style.width = "350px";
     document.getElementById("overlay").style.display = "block";
     document.getElementById("menuIcon").style.opacity = "0";
@@ -134,16 +113,13 @@ function closeMenu() {
     document.getElementById("sidebar").style.width = "0";
     document.getElementById("overlay").style.display = "none";
     document.getElementById("menuIcon").style.opacity = "1";
-    // Chiudi anche la ricerca quando si chiude il menu
     document.getElementById("searchInput").style.display = "none";
     document.getElementById("searchInput").value = "";
     document.getElementById("searchResults").innerHTML = "";
-    document.getElementById("searchResultsPanel").style.display = "none";
 }
 
 function toggleSearch() {
     var searchInput = document.getElementById("searchInput");
-    var resultsPanel = document.getElementById("searchResultsPanel");
     if (searchInput.style.display === "none" || searchInput.style.display === "") {
         searchInput.style.display = "block";
         searchInput.focus();
@@ -151,49 +127,51 @@ function toggleSearch() {
         searchInput.style.display = "none";
         searchInput.value = "";
         document.getElementById("searchResults").innerHTML = "";
-        resultsPanel.style.display = "none";
     }
 }
 
 function searchArticles() {
     var input = document.getElementById("searchInput").value.toLowerCase();
     var resultsContainer = document.getElementById("searchResults");
-    var resultsPanel = document.getElementById("searchResultsPanel");
     resultsContainer.innerHTML = "";
     
     if (input.length < 2) {
-        resultsPanel.style.display = "none";
         return;
     }
     
-    // Mostra il pannello dei risultati
-    resultsPanel.style.display = "block";
-    
-    // Cerca negli articoli della pagina
-    var articles = document.querySelectorAll(".article-card");
-    var found = false;
-    
-    articles.forEach(function(article) {
-        var title = article.querySelector(".article-title").textContent.toLowerCase();
-        var category = article.querySelector(".article-category").textContent.toLowerCase();
-        var text = article.querySelector(".article-text").textContent.toLowerCase();
-        
-        if (title.includes(input) || category.includes(input) || text.includes(input)) {
-            found = true;
-            var resultItem = document.createElement("a");
-            resultItem.href = "#";
-            resultItem.className = "search-result-item";
-            resultItem.textContent = article.querySelector(".article-title").textContent + " (" + article.querySelector(".article-category").textContent + ")";
-            resultItem.onclick = function() {
-                closeMenu();
-                article.scrollIntoView({ behavior: 'smooth' });
-            };
-            resultsContainer.appendChild(resultItem);
-        }
+    // Cerca negli articoli dal JSON
+    var foundArticles = articoliData.filter(function(art) {
+        return art.titolo.toLowerCase().includes(input) || 
+               art.categoria.toLowerCase().includes(input) || 
+               art.anteprima.toLowerCase().includes(input) ||
+               art.contenuto.toLowerCase().includes(input);
     });
     
-    if (!found && input.length >= 2) {
+    if (foundArticles.length === 0) {
         resultsContainer.innerHTML = "<p class='no-results'>Nessun risultato trovato</p>";
+        return;
+    }
+    
+    // Mostra massimo 3 risultati
+    var maxResults = Math.min(foundArticles.length, 3);
+    for (var i = 0; i < maxResults; i++) {
+        var art = foundArticles[i];
+        var resultItem = document.createElement("a");
+        resultItem.href = "articolo.html?id=" + art.id;
+        resultItem.className = "search-result-item";
+        resultItem.textContent = art.titolo + " (" + art.categoria + ")";
+        resultsContainer.appendChild(resultItem);
+    }
+    
+    // Se ci sono più di 3 risultati, mostra "di più"
+    if (foundArticles.length > 3) {
+        localStorage.setItem('searchResults', JSON.stringify(foundArticles));
+        
+        var moreLink = document.createElement("a");
+        moreLink.href = "ricerca.html";
+        moreLink.className = "search-more-link";
+        moreLink.textContent = "di più (" + (foundArticles.length - 3) + " altri)";
+        resultsContainer.appendChild(moreLink);
     }
 }
 </script>

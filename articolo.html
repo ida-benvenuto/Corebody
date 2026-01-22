@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articolo - Corebody</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/home.css">
+    <style>
+        .article-page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .article-header {
+            margin-bottom: 30px;
+        }
+        
+        .article-header .category {
+            font-family: serif;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .article-header .title {
+            font-family: serif;
+            font-size: 42px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: normal;
+        }
+        
+        .article-header .date {
+            font-size: 14px;
+            color: #999;
+        }
+        
+        .article-main-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            margin-bottom: 40px;
+        }
+        
+        .article-body {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .article-body p {
+            margin-bottom: 20px;
+        }
+        
+        .related-articles {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .related-articles h3 {
+            font-family: serif;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .article-header .title {
+                font-size: 28px;
+            }
+            
+            .article-main-image {
+                height: 300px;
+            }
+            
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="article-page">
+        <a href="index.html" class="back-link">← Torna alla home</a>
+        
+        <article id="articleContent">
+            <!-- Contenuto caricato dinamicamente -->
+        </article>
+        
+        <div class="related-articles">
+            <h3>Articoli correlati</h3>
+            <div class="related-grid" id="relatedGrid">
+                <!-- Articoli correlati caricati dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Ottieni l'ID dell'articolo dall'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleId = parseInt(urlParams.get('id'));
+        
+        // Carica gli articoli dal JSON
+        fetch('articoli.json')
+            .then(response => response.json())
+            .then(articoli => {
+                // Trova l'articolo corrente
+                const articolo = articoli.find(a => a.id === articleId);
+                
+                if (articolo) {
+                    // Aggiorna il titolo della pagina
+                    document.title = articolo.titolo + ' - Corebody';
+                    
+                    // Mostra l'articolo
+                    document.getElementById('articleContent').innerHTML = `
+                        <header class="article-header">
+                            <p class="category">${articolo.categoria}</p>
+                            <h1 class="title">${articolo.titolo}</h1>
+                            <p class="date">${articolo.data}</p>
+                        </header>
+                        <img src="${articolo.immagine}" alt="${articolo.titolo}" class="article-main-image">
+                        <div class="article-body">
+                            <p>${articolo.contenuto}</p>
+                        </div>
+                    `;
+                    
+                    // Mostra articoli correlati (stessa categoria, escluso quello corrente)
+                    const correlati = articoli
+                        .filter(a => a.categoria === articolo.categoria && a.id !== articleId)
+                        .slice(0, 3);
+                    
+                    const relatedGrid = document.getElementById('relatedGrid');
+                    
+                    if (correlati.length > 0) {
+                        correlati.forEach(art => {
+                            relatedGrid.innerHTML += `
+                                <article class="article-card" onclick="window.location='articolo.html?id=${art.id}'" style="cursor: pointer;">
+                                    <img src="${art.immagine}" alt="${art.categoria}" class="article-image">
+                                    <div class="article-content">
+                                        <h3 class="article-category">${art.categoria}</h3>
+                                        <p class="article-date">${art.data}</p>
+                                        <h2 class="article-title">${art.titolo}</h2>
+                                    </div>
+                                </article>
+                            `;
+                        });
+                    } else {
+                        document.querySelector('.related-articles').style.display = 'none';
+                    }
+                } else {
+                    document.getElementById('articleContent').innerHTML = '<p>Articolo non trovato.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Errore nel caricamento degli articoli:', error);
+                document.getElementById('articleContent').innerHTML = '<p>Errore nel caricamento dell\'articolo.</p>';
+            });
+    </script>
+</body>
+</html>
