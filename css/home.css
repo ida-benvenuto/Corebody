@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'secondo_font';
+    src: url('../font/BasheqVintageDemoVersionRegular-gwpmE.otf') format('opentype');
+}
+
 immagine_iniziale {
     position: relative;
     display: block;
@@ -33,6 +38,7 @@ immagine_iniziale .titolo {
     color: white;
     text-align: center;
     z-index: 2;
+    font-family: 'primo_font', sans-serif;
 }
 
 /* Sidebar menu */
@@ -59,7 +65,7 @@ immagine_iniziale .titolo {
     color: #000;
     display: block;
     transition: 0.3s;
-    font-family: serif;
+    font-family: 'secondo_font', sans-serif;
     white-space: nowrap;
 }
 
@@ -67,6 +73,7 @@ immagine_iniziale .titolo {
     color: #666;
 }
 .search-results a{
+    font-family: 'secondo_font', sans-serif;
     font-size: 14px;
     padding: 10px 20px;
 }
@@ -179,14 +186,15 @@ immagine_iniziale .titolo {
 /* Sezione Latest Articles */
 
 .latest-title {
-    font-family: serif;
-    font-size: 48px;
+    font-size: 35px;
     color: #852936;
     text-align: left;
-    margin-bottom: 28px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     padding-left: 10px;
     font-weight: normal;
     letter-spacing: 2px;
+    font-family: 'secondo_font', sans-serif;
 }
 
 /* Grid layout per le card */
@@ -200,7 +208,7 @@ immagine_iniziale .titolo {
 
 /* Stile per ogni card */
 .article-card {
-    background-color: white;
+    background-color: #f9f9f9;
     display: flex;
     flex-direction: column;
 }
@@ -217,29 +225,31 @@ immagine_iniziale .titolo {
 }
 
 .article-category {
-    font-family: serif;
-    font-size: 18px;
+    font-family: 'secondo_font', sans-serif;
+    font-size: 20px;
     margin-bottom: 5px;
     font-weight: normal;
 }
 
 .article-date {
-    font-size: 12px;
-    color: #666;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 9px;
+    color: #000;
     margin-bottom: 15px;
 }
 
 .article-title {
-    font-family: serif;
-    font-size: 20px;
-    color: #E1AEBC;
+    font-family: sans-serif;
+    font-size: 18px;
+    color: #852936;
     font-style: italic;
     margin-bottom: 15px;
-    font-weight: normal;
+    font-weight: lighter;
 }
 
 .article-text {
-    font-size: 13px;
+    font-family: sans-serif;
+    font-size: 10px;
     line-height: 1.6;
     color: #333;
 }
