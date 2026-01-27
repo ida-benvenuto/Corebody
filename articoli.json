@@ -4,7 +4,7 @@
         "titolo": "Titolo dell'articolo 1",
         "categoria": "FASHION",
         "data": "17 gennaio 2023",
-        "immagine": "immagini/imma-instagram-1548329109.jpg.avif",
+        "immagine": "immagini/articolo_1.jpeg",
         "anteprima": "Anis dolut et voluptas eos imet audis dolomet, vimi fugiae eaturi aut dignetur pelit et delor sum qui blanto quunt lique nimamet molupta aut exerenim volecia cum explit laborio.",
         "contenuto": "Qui va il contenuto completo dell'articolo. Puoi scrivere tutto il testo che vuoi, includere paragrafi multipli, ecc. Questo è il testo che apparirà nella pagina dedicata all'articolo."
     },
@@ -13,7 +13,7 @@
         "titolo": "Titolo dell'articolo 2",
         "categoria": "FASHION",
         "data": "15 gennaio 2023",
-        "immagine": "immagini/imma-instagram-1548329109.jpg.avif",
+        "immagine": "immagini/articolo_2.jpeg",
         "anteprima": "Anis dolut et voluptas eos imet audis dolomet, vimi fugiae eaturi aut dignetur pelit et delor sum qui blanto quunt lique nimamet molupta aut exerenim volecia cum explit laborio.",
         "contenuto": "Contenuto completo del secondo articolo. Qui puoi aggiungere tutto il testo, le descrizioni, i dettagli che vuoi mostrare quando l'utente apre l'articolo."
     },
@@ -22,7 +22,7 @@
         "titolo": "Titolo dell'articolo 3",
         "categoria": "BEAUTY",
         "data": "12 gennaio 2023",
-        "immagine": "immagini/imma-instagram-1548329109.jpg.avif",
+        "immagine": "immagini/articolo_3.jpeg",
         "anteprima": "Anis dolut et voluptas eos imet audis dolomet, vimi fugiae eaturi aut dignetur pelit et delor sum qui blanto quunt lique nimamet molupta aut exerenim volecia cum explit laborio.",
         "contenuto": "Contenuto completo del terzo articolo sulla bellezza e wellness. Descrivi qui tutti i dettagli, consigli, prodotti, ecc."
     },
@@ -31,7 +31,7 @@
         "titolo": "Titolo dell'articolo 4",
         "categoria": "ART",
         "data": "10 gennaio 2023",
-        "immagine": "immagini/imma-instagram-1548329109.jpg.avif",
+        "immagine": "immagini/articolo_4.jpeg",
         "anteprima": "Anis dolut et voluptas eos imet audis dolomet, vimi fugiae eaturi aut dignetur pelit et delor sum qui blanto quunt lique nimamet molupta aut exerenim volecia cum explit laborio.",
         "contenuto": "Contenuto completo del quarto articolo sull'arte. Puoi parlare di mostre, artisti, opere, eventi culturali, ecc."
     }
