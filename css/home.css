@@ -186,7 +186,7 @@ immagine_iniziale .titolo {
 /* Sezione Latest Articles */
 
 .latest-title {
-    font-size: 35px;
+    font-size: 38px;
     color: #852936;
     text-align: left;
     margin-top: 15px;
@@ -222,12 +222,14 @@ immagine_iniziale .titolo {
 .article-content {
     padding: 0px;
     flex-grow: 1;
+    margin-left: 15px;
 }
 
 .article-category {
     font-family: 'secondo_font', sans-serif;
-    font-size: 20px;
-    margin-bottom: 5px;
+    font-size: 25px;
+    margin-top: 5px;
+    margin-bottom: 2px;
     font-weight: normal;
 }
 
@@ -235,6 +237,7 @@ immagine_iniziale .titolo {
     font-family:Arial, Helvetica, sans-serif;
     font-size: 9px;
     color: #000;
+    margin-top: 0px;
     margin-bottom: 15px;
 }
 
