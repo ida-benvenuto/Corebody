@@ -43,7 +43,7 @@ immagine_iniziale .titolo {
     z-index: 1000;
     top: 0;
     left: 0;
-    background-color: #fafaeaa0;
+    background-color: #FAFAEA;
     overflow: hidden;
     transition: 0.5s;
     padding-bottom: 20px;
@@ -181,7 +181,7 @@ immagine_iniziale .titolo {
 .latest-title {
     font-family: serif;
     font-size: 48px;
-    color: #690002;
+    color: #852936;
     text-align: left;
     margin-bottom: 28px;
     padding-left: 10px;
@@ -232,7 +232,7 @@ immagine_iniziale .titolo {
 .article-title {
     font-family: serif;
     font-size: 20px;
-    color: #8b6f7a;
+    color: #E1AEBC;
     font-style: italic;
     margin-bottom: 15px;
     font-weight: normal;
@@ -270,7 +270,7 @@ immagine_iniziale .titolo {
 .sezione_finale {
     height: 100vh;
     width: 100%;
-    background-color: #2d52afcf;
+    background-color: #C5D9E2;
     display: flex;
     justify-content: center;
     align-items: center;
