@@ -43,7 +43,7 @@ immagine_iniziale .titolo {
     z-index: 1000;
     top: 0;
     left: 0;
-    background-color: #FAFAEA;
+    background-color: #fafaeabe;
     overflow: hidden;
     transition: 0.5s;
     padding-bottom: 20px;
