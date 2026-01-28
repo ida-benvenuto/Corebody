@@ -3,11 +3,17 @@
     src: url('../font/BasheqVintageDemoVersionRegular-gwpmE.otf') format('opentype');
 }
 
+/* Smooth scroll globale */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: #e1aebc;
     font-family: 'Cowboya', sans-serif;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 nav {
@@ -34,8 +40,23 @@ nav ul img {
     width: 28px;
     height: 28px;
     object-fit: cover;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+nav ul img:hover {
+    transform: scale(1.15);
+    opacity: 0.8;
 }
 
 nav sinistra {
     margin-left: auto;
+}
+
+footer{
+    background-color: #c5d9e2;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }

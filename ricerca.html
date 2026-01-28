@@ -4,76 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Risultati ricerca - Corebody</title>
+    <link rel="icon" href="immagini/SIGLA NERA.png?v=2" sizes="32x32" type="image/png">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/home.css">
-    <style>
-        .search-page {
-            padding: 40px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .search-page h1 {
-            font-family: serif;
-            font-size: 36px;
-            margin-bottom: 30px;
-        }
-        
-        .search-page .search-query {
-            color: #666;
-            font-style: italic;
-        }
-        
-        .results-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        
-        .back-link {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #333;
-            text-decoration: none;
-        }
-        
-        .back-link:hover {
-            text-decoration: underline;
-        }
-        
-        @media (max-width: 1024px) {
-            .results-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .results-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/ricerca_artcoli.css">
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="search-nav" id="searchNav">
+        <a href="index.html" class="back-link">
+            <svg fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+            </svg>
+            Torna alla home
+        </a>
+    </nav>
+    
+    <!-- Header -->
+    <header class="search-header">
+        <div class="search-header-content">
+            <h1>Risultati per</h1>
+            <span class="search-query" id="queryDisplay">"..."</span>
+            <p class="results-count" id="resultsCount"></p>
+        </div>
+    </header>
+    
+    <!-- Risultati -->
     <div class="search-page">
-        <a href="prova.html" class="back-link">← Torna alla home</a>
-        <h1>Risultati per: <span class="search-query" id="queryDisplay"></span></h1>
         <div class="results-grid" id="resultsGrid">
             <!-- I risultati verranno inseriti qui -->
         </div>
-        <p id="noResults" style="display: none;">Nessun risultato trovato.</p>
+        
+        <div class="no-results" id="noResults" style="display: none;">
+            <div class="no-results-icon">🔍</div>
+            <h2>Nessun risultato trovato</h2>
+            <p>Non abbiamo trovato articoli corrispondenti alla tua ricerca.</p>
+            <a href="index.html">Torna alla home</a>
+        </div>
     </div>
+    
+    <!-- Footer -->
+    <footer class="search-footer">
+        <img src="immagini/LOGO NERO.png" alt="Corebody">
+        <div class="search-footer-social">
+            <a href="https://www.instagram.com" target="_blank"><img src="immagini/ig icon nera-01.png" alt="Instagram"></a>
+            <a href="https://www.tiktok.com" target="_blank"><img src="immagini/tik tok icon nera-02.png" alt="TikTok"></a>
+            <a href="https://www.pinterest.com" target="_blank"><img src="immagini/pinterest icon nera-03.png" alt="Pinterest"></a>
+        </div>
+    </footer>
 
     <script>
         // Ottieni i dati dalla localStorage
         var articlesData = JSON.parse(localStorage.getItem('searchResults') || '[]');
         var query = localStorage.getItem('searchQuery') || '';
         
-        document.getElementById('queryDisplay').textContent = query;
+        document.getElementById('queryDisplay').textContent = '"' + query + '"';
         
         var resultsGrid = document.getElementById('resultsGrid');
         
         if (articlesData.length > 0) {
+            document.getElementById('resultsCount').textContent = articlesData.length + ' articol' + (articlesData.length === 1 ? 'o' : 'i') + ' trovat' + (articlesData.length === 1 ? 'o' : 'i');
+            
             articlesData.forEach(function(article) {
                 var card = document.createElement('article');
                 card.className = 'article-card';
@@ -93,7 +84,18 @@
             });
         } else {
             document.getElementById('noResults').style.display = 'block';
+            document.querySelector('.search-footer').style.marginTop = '0';
         }
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('searchNav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
     </script>
 </body>
 </html>

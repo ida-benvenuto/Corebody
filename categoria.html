@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categoria - Corebody</title>
+    <link rel="icon" href="immagini/SIGLA NERA.png?v=2" sizes="32x32" type="image/png">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/home.css">
+    <style>
+        
+        /* Header categoria */
+        .category-header {
+            padding: 150px 40px 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-header h1 {
+            font-family: 'secondo_font', sans-serif;
+            font-size: 72px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: normal;
+            letter-spacing: 5px;
+        }
+        
+        .category-header .category-count {
+            font-size: 16px;
+            color: #666;
+            margin-top: 20px;
+        }
+        
+        /* Navbar */
+        .category-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background-color: transparent;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .category-nav.scrolled {
+            background-color: rgba(250, 250, 250, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .category-nav .back-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .category-nav .back-link:hover {
+            opacity: 0.7;
+        }
+        
+        .category-nav .back-link svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* Griglia articoli */
+        .category-page {
+            padding: 60px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .category-grid .article-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .category-grid .article-card:nth-child(1) { animation-delay: 0.1s; }
+        .category-grid .article-card:nth-child(2) { animation-delay: 0.15s; }
+        .category-grid .article-card:nth-child(3) { animation-delay: 0.2s; }
+        .category-grid .article-card:nth-child(4) { animation-delay: 0.25s; }
+        .category-grid .article-card:nth-child(5) { animation-delay: 0.3s; }
+        .category-grid .article-card:nth-child(6) { animation-delay: 0.35s; }
+        .category-grid .article-card:nth-child(7) { animation-delay: 0.4s; }
+        .category-grid .article-card:nth-child(8) { animation-delay: 0.45s; }
+        .category-grid .article-card:nth-child(9) { animation-delay: 0.5s; }
+        
+        .category-grid .article-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .category-grid .article-image {
+            height: 280px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .category-grid .article-card:hover .article-image {
+            transform: scale(1.05);
+        }
+        
+        .category-grid .article-content {
+            padding: 25px;
+        }
+        
+        .category-grid .article-category {
+            display: none;
+        }
+        
+        /* No articles */
+        .no-articles {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .no-articles h2 {
+            font-family: 'secondo_font', sans-serif;
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .no-articles p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        
+        .no-articles a {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: #852936;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .no-articles a:hover {
+            background-color: #6a1f2a;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(133, 41, 54, 0.3);
+        }
+        
+        /* Footer */
+        .category-footer {
+            background-color: #C5D9E2;
+            padding: 60px 30px;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .category-footer img.logo {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        
+        .category-footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .category-footer-links a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .category-footer-links a:hover {
+            opacity: 0.7;
+        }
+        
+        .category-footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .category-footer-social img {
+            width: 25px;
+            height: 25px;
+            transition: transform 0.3s ease;
+        }
+        
+        .category-footer-social img:hover {
+            transform: scale(1.2);
+        }
+        
+        /* Animazioni */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .category-header h1 {
+                font-size: 48px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .category-header {
+                padding: 120px 20px 80px;
+            }
+            
+            .category-header h1 {
+                font-size: 36px;
+                letter-spacing: 3px;
+            }
+            
+            .category-page {
+                padding: 40px 20px;
+            }
+            
+            .category-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .category-grid .article-image {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="category-nav" id="categoryNav">
+        <a href="index.html" class="back-link">
+            <svg fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+            </svg>
+            Torna alla home
+        </a>
+    </nav>
+    
+    <!-- Header -->
+    <header class="category-header">
+        <h1 id="categoryTitle">CATEGORIA</h1>
+        <p class="category-count" id="categoryCount"></p>
+    </header>
+    
+    <!-- Articoli -->
+    <div class="category-page">
+        <div class="category-grid" id="categoryGrid">
+            <!-- Gli articoli verranno inseriti qui -->
+        </div>
+        
+        <div class="no-articles" id="noArticles" style="display: none;">
+            <h2>Nessun articolo in questa categoria</h2>
+            <p>Non ci sono ancora articoli in questa sezione.</p>
+            <a href="index.html">Torna alla home</a>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="category-footer">
+        <img src="immagini/LOGO NERO.png" alt="Corebody" class="logo">
+        <div class="category-footer-links">
+            <a href="#">ABOUT</a>
+            <a href="#">SUBMISSION</a>
+            <a href="#">CONTACT</a>
+        </div>
+        <div class="category-footer-social">
+            <a href="https://www.instagram.com" target="_blank"><img src="immagini/ig icon nera-01.png" alt="Instagram"></a>
+            <a href="https://www.tiktok.com" target="_blank"><img src="immagini/tik tok icon nera-02.png" alt="TikTok"></a>
+            <a href="https://www.pinterest.com" target="_blank"><img src="immagini/pinterest icon nera-03.png" alt="Pinterest"></a>
+        </div>
+    </footer>
+
+    <script>
+        // Ottieni la categoria dall'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoria = urlParams.get('cat');
+        
+        // Mappa per i nomi delle categorie da mostrare
+        const categoryNames = {
+            'fashion': 'FASHION',
+            'beauty': 'BEAUTY AND WELLNESS',
+            'art': 'ART'
+        };
+        
+        // Mappa per cercare nel JSON (le categorie nel JSON)
+        const categorySearch = {
+            'fashion': 'FASHION',
+            'beauty': 'BEAUTY',
+            'art': 'ART'
+        };
+        
+        // Imposta il titolo della categoria
+        const displayName = categoryNames[categoria] || categoria.toUpperCase();
+        document.getElementById('categoryTitle').textContent = displayName;
+        document.title = displayName + ' - Corebody';
+        
+        // Carica gli articoli dal JSON
+        fetch('articoli.json')
+            .then(response => response.json())
+            .then(articoli => {
+                // Filtra gli articoli per categoria
+                const searchTerm = categorySearch[categoria] || categoria.toUpperCase();
+                const articoliFiltrati = articoli.filter(a => 
+                    a.categoria.toUpperCase() === searchTerm.toUpperCase()
+                );
+                
+                const grid = document.getElementById('categoryGrid');
+                
+                if (articoliFiltrati.length > 0) {
+                    // Mostra il conteggio
+                    document.getElementById('categoryCount').textContent = 
+                        articoliFiltrati.length + ' articol' + (articoliFiltrati.length === 1 ? 'o' : 'i');
+                    
+                    // Mostra gli articoli
+                    articoliFiltrati.forEach(function(art) {
+                        grid.innerHTML += `
+                            <article class="article-card" onclick="window.location='articolo.html?id=${art.id}'" style="cursor: pointer;">
+                                <img src="${art.immagine}" alt="${art.categoria}" class="article-image">
+                                <div class="article-content">
+                                    <h3 class="article-category">${art.categoria}</h3>
+                                    <p class="article-date">${art.data}</p>
+                                    <h2 class="article-title">${art.titolo}</h2>
+                                    <p class="article-text">${art.anteprima}</p>
+                                </div>
+                            </article>
+                        `;
+                    });
+                } else {
+                    document.getElementById('noArticles').style.display = 'block';
+                    document.querySelector('.category-footer').style.marginTop = '0';
+                }
+            })
+            .catch(error => {
+                console.error('Errore nel caricamento degli articoli:', error);
+                document.getElementById('noArticles').style.display = 'block';
+            });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('categoryNav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

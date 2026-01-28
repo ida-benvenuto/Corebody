@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="icon" href="immagini/SIGLA NERA.png" type="image/png">
+    <link rel="icon" href="immagini/SIGLA NERA.png?v=2" sizes="32x32" type="image/png">
+
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/home.css">
 </head>
@@ -14,14 +15,17 @@
 
     <!-- Menu Sidebar -->
     <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <span class="close-btn" onclick="closeMenu()">&times;</span>
+        </div>
         <div class="search-container">
             <input type="text" id="searchInput" class="search-input" placeholder="Cerca tra gli articoli..." onkeyup="searchArticles()">
             <img src="immagini/lente ricerca icon nera-05.png" alt="cerca" class="search-icon" onclick="toggleSearch()">
         </div>
         <div id="searchResults" class="search-results"></div>
-        <a href="#">FASHION</a>
-        <a href="#">BEAUTY AND WELLNESS</a>
-        <a href="#">ART</a>
+        <a href="categoria.html?cat=fashion">FASHION</a>
+        <a href="categoria.html?cat=beauty">BEAUTY AND WELLNESS</a>
+        <a href="categoria.html?cat=art">ART</a>
         <a href="#">SHOP</a>
         <div class="basso">
         <a href="#">ABOUT</a>
@@ -46,6 +50,9 @@
             </nav>
             <img src="immagini/FOTO HOME PAGE.jpg" alt="Immagine Iniziale">
             <img src="immagini/LOGO BEIGE.png" alt="Corebody" class="titolo">
+            <div class="scroll-indicator">
+                <span></span>
+            </div>
         </immagine_iniziale>
         <section class="latest-section">
             <h1 class="latest-title">LATEST</h1>
@@ -73,9 +80,7 @@
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2026 Corebody. Tutti i diritti riservati.</p>
-    </footer>
+
     </main>
 <script>
 // Variabile globale per gli articoli
@@ -105,7 +110,12 @@ fetch('articoli.json')
     .catch(error => console.error('Errore nel caricamento degli articoli:', error));
 
 function openMenu() {
-    document.getElementById("sidebar").style.width = "40%";
+    // Su mobile apre a schermo intero, su desktop al 40%
+    if (window.innerWidth <= 768) {
+        document.getElementById("sidebar").style.width = "100%";
+    } else {
+        document.getElementById("sidebar").style.width = "40%";
+    }
     document.getElementById("overlay").style.display = "block";
     document.getElementById("menuIcon").style.opacity = "0";
 }
@@ -175,6 +185,64 @@ function searchArticles() {
         resultsContainer.appendChild(moreLink);
     }
 }
+
+// ===== SCROLL ANIMATIONS =====
+// Intersection Observer per animazioni al scroll
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+            // Aggiungi delay progressivo per le card
+            if (entry.target.classList.contains('article-card')) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, index * 100);
+            } else {
+                entry.target.classList.add('visible');
+            }
+        }
+    });
+}, observerOptions);
+
+// Osserva elementi quando il DOM è pronto
+document.addEventListener('DOMContentLoaded', function() {
+    // Osserva il titolo LATEST
+    const latestTitle = document.querySelector('.latest-title');
+    if (latestTitle) observer.observe(latestTitle);
+    
+    // Osserva le card dopo che sono state caricate
+    setTimeout(() => {
+        document.querySelectorAll('.article-card').forEach(card => {
+            observer.observe(card);
+        });
+    }, 500);
+});
+
+// Parallax leggero sullo scroll
+window.addEventListener('scroll', function() {
+    const scrolled = window.pageYOffset;
+    const heroImage = document.querySelector('immagine_iniziale > img');
+    const heroTitle = document.querySelector('immagine_iniziale .titolo');
+    
+    if (heroImage && scrolled < window.innerHeight) {
+        heroImage.style.transform = `scale(${1 + scrolled * 0.0003}) translateY(${scrolled * 0.3}px)`;
+    }
+    
+    if (heroTitle && scrolled < window.innerHeight) {
+        heroTitle.style.opacity = 1 - (scrolled * 0.002);
+        heroTitle.style.transform = `translate(-50%, calc(-50% + ${scrolled * 0.4}px))`;
+    }
+    
+    // Nascondi scroll indicator
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    if (scrollIndicator) {
+        scrollIndicator.style.opacity = scrolled > 50 ? '0' : '1';
+    }
+});
 </script>
 </body>
 </html>
