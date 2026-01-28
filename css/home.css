@@ -175,7 +175,9 @@ immagine_iniziale .titolo {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 60px;
+    max-width: 60vw;
+    width: auto;
+    height: auto;
     color: white;
     text-align: center;
     z-index: 2;
@@ -483,10 +485,11 @@ immagine_iniziale .titolo {
         font-size: 14px !important;
     }
     
-    /* Hero section mobile */
+    /* Hero section mobile - LOGO PIÙ PICCOLO */
     immagine_iniziale .titolo {
-        max-width: 90vw;
-        width: 90vw;
+        max-width: 70vw;
+        width: 70vw;
+        height: auto;
     }
     
     /* Sezione finale mobile */
@@ -552,8 +555,9 @@ immagine_iniziale .titolo {
     
     /* Hero logo mobile piccolo */
     immagine_iniziale .titolo {
-        max-width: 95vw;
-        width: 95vw;
+        max-width: 80vw;
+        width: auto;
+        height: auto;
     }
     
     .scritta_centro .titolo {
