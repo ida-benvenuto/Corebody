@@ -498,13 +498,13 @@ immagine_iniziale .titolo {
     }
     
     .scritta_centro .titolo {
-        max-width: 85vw;
-        margin-bottom: 20px;
+        max-width: 70vw;
+        margin-bottom: 10px;
     }
     
     .scritta_centro .basso {
-        gap: 25px;
-        margin-top: 10px;
+        gap: 30px;
+        margin-top: 20px;
         flex-wrap: wrap;
         justify-content: center;
     }
@@ -561,13 +561,13 @@ immagine_iniziale .titolo {
     }
     
     .scritta_centro .titolo {
-        max-width: 90vw;
-        margin-bottom: 15px;
+        max-width: 65vw;
+        margin-bottom: 10px;
     }
     
     .scritta_centro .basso {
-        gap: 20px;
-        margin-top: 5px;
+        gap: 25px;
+        margin-top: 15px;
     }
     
     .scritta_centro .basso a {
