@@ -10,6 +10,145 @@
     <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
+    <!-- Popup Newsletter -->
+    <div id="newsletterOverlay" class="newsletter-overlay">
+        <div class="newsletter-popup">
+            <span class="newsletter-close" onclick="closeNewsletter()">&times;</span>
+            <h2>ISCRIVITI ALLA NEWSLETTER</h2>
+            <p>Resta aggiornato sulle ultime novità di Corebody</p>
+            <form id="newsletterForm" onsubmit="submitNewsletter(event)">
+                <input type="email" id="newsletterEmail" placeholder="Inserisci la tua email" required>
+                <button type="submit">ISCRIVITI</button>
+            </form>
+            <p class="newsletter-success" id="newsletterSuccess">Grazie per esserti iscritto!</p>
+        </div>
+    </div>
+
+    <style>
+        .newsletter-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .newsletter-overlay.active {
+            display: flex;
+        }
+        
+        .newsletter-popup {
+            background: #f5f0eb;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            animation: popupSlideIn 0.4s ease;
+        }
+        
+        @keyframes popupSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .newsletter-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #333;
+            transition: color 0.3s;
+        }
+        
+        .newsletter-close:hover {
+            color: #000;
+        }
+        
+        .newsletter-popup h2 {
+            font-family: 'Times New Roman', serif;
+            font-size: 24px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            color: #333;
+        }
+        
+        .newsletter-popup p {
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+        }
+        
+        .newsletter-popup form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .newsletter-popup input[type="email"] {
+            padding: 15px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            font-family: 'Arial', sans-serif;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .newsletter-popup input[type="email"]:focus {
+            border-color: #333;
+        }
+        
+        .newsletter-popup button {
+            padding: 15px;
+            background: #333;
+            color: #f5f0eb;
+            border: none;
+            font-size: 14px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+            transition: background 0.3s;
+        }
+        
+        .newsletter-popup button:hover {
+            background: #000;
+        }
+        
+        .newsletter-success {
+            display: none;
+            color: #2e7d32 !important;
+            margin-top: 15px;
+            margin-bottom: 0 !important;
+        }
+        
+        .newsletter-success.show {
+            display: block;
+        }
+        
+        @media (max-width: 480px) {
+            .newsletter-popup {
+                padding: 30px 20px;
+            }
+            
+            .newsletter-popup h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+
     <!-- Overlay per chiudere il menu -->
     <div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
@@ -219,6 +358,69 @@ document.addEventListener('DOMContentLoaded', function() {
             observer.observe(card);
         });
     }, 500);
+    
+    // Mostra popup newsletter dopo 2 secondi (solo se non già iscritto)
+    if (!localStorage.getItem('newsletterSubscribed')) {
+        setTimeout(() => {
+            document.getElementById('newsletterOverlay').classList.add('active');
+        }, 500);
+    }
+});
+
+// ===== NEWSLETTER POPUP =====
+function closeNewsletter() {
+    document.getElementById('newsletterOverlay').classList.remove('active');
+}
+
+// URL del tuo Google Apps Script - SOSTITUISCI con il tuo URL dopo il deploy
+var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDJ-gAtJx77iI1iO7aeW-AGVsubv1rLG3pvuxhnmGOBaS9eFBUrlx1F7blMN7fiRD3sg/exec';
+
+function submitNewsletter(event) {
+    event.preventDefault();
+    var email = document.getElementById('newsletterEmail').value;
+    var submitBtn = document.querySelector('.newsletter-popup button');
+    
+    // Disabilita il bottone durante l'invio
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'INVIO IN CORSO...';
+    
+    // Invia richiesta a Google Apps Script
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email })
+    })
+    .then(function() {
+        console.log('Richiesta inviata con successo!');
+        
+        // Mostra messaggio di successo
+        document.getElementById('newsletterForm').style.display = 'none';
+        document.getElementById('newsletterSuccess').classList.add('show');
+        
+        // Salva che l'utente si è iscritto
+        localStorage.setItem('newsletterSubscribed', 'true');
+        
+        // Chiudi popup dopo 2 secondi
+        setTimeout(() => {
+            closeNewsletter();
+        }, 2000);
+    })
+    .catch(function(error) {
+        console.error('Errore:', error);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'ISCRIVITI';
+        alert('Si è verificato un errore. Riprova più tardi.');
+    });
+}
+
+// Chiudi popup cliccando fuori
+document.getElementById('newsletterOverlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeNewsletter();
+    }
 });
 
 
