@@ -1,1 +1,3 @@
 scegliere colore menù
+
+controllare il menù, apertura/chiusura

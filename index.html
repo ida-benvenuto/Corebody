@@ -50,6 +50,7 @@
             text-align: center;
             position: relative;
             animation: popupSlideIn 0.4s ease;
+            border-radius: 34px;
         }
         
         @keyframes popupSlideIn {
@@ -105,6 +106,7 @@
             font-family: 'Arial', sans-serif;
             outline: none;
             transition: border-color 0.3s;
+            border-radius: 14px;
         }
         
         .newsletter-popup input[type="email"]:focus {
@@ -121,6 +123,7 @@
             cursor: pointer;
             font-family: 'Arial', sans-serif;
             transition: background 0.3s;
+                    border-radius: 14px;
         }
         
         .newsletter-popup button:hover {
@@ -148,32 +151,6 @@
             }
         }
 
-        .latest-row {
-  width: 100vw;
-  overflow: hidden;
-  background: transparent;
-}
-
-.latest-track {
-  display: flex;
-  width: max-content;           /* largo quanto il contenuto */
-  animation: latestMarquee 16s linear infinite;
-}
-
-.latest-strip {
-  display: flex;
-  align-items: center;
-}
-
-@keyframes latestMarquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    /* una strip intera esce a sinistra, l'altra la sostituisce */
-    transform: translateX(-50%);
-  }
-}
     </style>
 
     <!-- Overlay per chiudere il menu -->
