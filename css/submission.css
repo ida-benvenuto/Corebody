@@ -13,7 +13,7 @@ body, html {
     position: relative;
     width: 100%;
     height: 100vh; /* Copre l'intera altezza dello schermo */
-    background-image: url('../immagini/_J1A0625.jpg'); /* Inserisci il tuo percorso immagine */
+    background-image: url('../immagini/J1A0625.jpg'); /* Inserisci il tuo percorso immagine */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -24,7 +24,7 @@ body, html {
     position: relative;
     width: 100%;
     height: 100vh; /* Copre l'intera altezza dello schermo */
-    background-image: url('../immagini/_J1A8170.jpg'); /* Inserisci il tuo percorso immagine */
+    background-image: url('../immagini/J1A8170.jpg'); /* Inserisci il tuo percorso immagine */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
