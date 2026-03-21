@@ -333,7 +333,6 @@ immagine_iniziale .titolo {
     cursor: pointer;
     color: #000;
     transition: opacity 0.3s ease;
-    display: none;
 }
 
 .close-btn:hover {
@@ -652,12 +651,14 @@ immagine_iniziale .titolo {
 
 @media (max-width: 1465px) {
     .sidebar {
-        width: 100vw;
-        min-width: 100vw;
-        max-width: 100vw;
+        /* Rimuovi min-width! */
+        max-width: 100vw; 
+        
+        /* Assicurati che l'overflow sia nascosto così 
+           il contenuto non "esce" quando la larghezza cala */
+        overflow-x: hidden; 
     }
 }
-
 
         
         .newsletter-close {

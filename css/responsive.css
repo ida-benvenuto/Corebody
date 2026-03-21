@@ -18,6 +18,44 @@
     .basso{
         max-width: 449px;
     }
+    @media (max-width: 768px) {
+    /* La sidebar deve essere sopra a TUTTO */
+    .sidebar {
+        width: 0;
+        height: 100%;
+        position: fixed;
+        z-index: 999999 !important; /* Aumentato drasticamente */
+        left: 0;
+        top: 0;
+        background-color: #fafaead6;
+        overflow-x: hidden;
+        transition: 0.5s;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* La X deve essere gigante e cliccabile */
+    .close-btn {
+        font-size: 50px; /* Più grande per le dita */
+        cursor: pointer;
+        color: #000;
+        padding: 20px;
+        display: block;
+        text-align: right;
+        position: relative;
+        z-index: 1000000 !important; /* Ancora più sopra della sidebar */
+        pointer-events: auto !important; /* Forza il browser a sentire il tocco */
+        -webkit-tap-highlight-color: transparent; /* Toglie il fastidioso quadrato blu al tocco */
+    }
+
+    /* Evitiamo che altri contenitori coprano la testata */
+    .sidebar-header {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        pointer-events: auto;
+    }
+}
 }
 
 /* Da aggiungere in fondo a about.css */

@@ -32,7 +32,7 @@
     <!-- Menu Sidebar -->
     <div id="sidebar" class="sidebar">
         <div class="sidebar-header">
-            <span class="close-btn" onclick="closeMenu()">&times;</span>
+            <button class="close-btn" onclick="closeMenu()" style="background:none; border:none; outline:none;">&times;</button>
         </div>
         <div class="search-container">
             <input type="text" id="searchInput" class="search-input" placeholder="Cerca tra gli articoli..." onkeyup="searchArticles()">
@@ -159,211 +159,135 @@
 
     </main>
 <script>
-// Funzione per aprire il popup newsletter
-function openNewsletter() {
-    document.getElementById('newsletterOverlay').classList.add('active');
+// --- 1. GESTIONE MENU SIDEBAR ---
+function openMenu() {
+    console.log("Apertura menu...");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const menuIcon = document.getElementById("menuIcon");
+    
+    if (sidebar && overlay) {
+        sidebar.style.width = (window.innerWidth <= 768) ? "100%" : "40%";
+        overlay.style.display = "block";
+        if (menuIcon) menuIcon.style.opacity = "0";
+    }
 }
-// Variabile globale per gli articoli
+
+function closeMenu() {
+    console.log("Chiusura menu...");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const menuIcon = document.getElementById("menuIcon");
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+    
+    if (sidebar && overlay) {
+        sidebar.style.width = "0";
+        overlay.style.display = "none";
+        if (menuIcon) menuIcon.style.opacity = "1";
+        
+        // Reset ricerca quando chiudi
+        if (searchInput) {
+            searchInput.style.display = "none";
+            searchInput.value = "";
+        }
+        if (searchResults) searchResults.innerHTML = "";
+    }
+}
+
+// --- 2. RICERCA E ARTICOLI ---
 var articoliData = [];
 
-// Carica gli articoli dal JSON
 fetch('articoli.json')
     .then(response => response.json())
     .then(articoli => {
         articoliData = articoli;
-        var grid = document.getElementById('articlesGrid');
+        const grid = document.getElementById('articlesGrid');
+        if (!grid) return;
         
-       articoli.forEach(function(art) {
-    grid.innerHTML += `
-        <article class="article-card" data-id="${art.id}" onclick="window.location='articolo.html?id=${art.id}'" style="cursor: pointer;">
-            <div class="article-image-container">
-                <img src="${art.immagine}" alt="${art.categoria}" class="article-image">
-            </div>
-            
-            <div class="article-content">
-                <h3 class="article-category">${art.categoria}</h3>
-                <p class="article-date">${art.data}</p>
-                <h2 class="article-title">${art.titolo}</h2>
-                <p class="article-text">${art.anteprima}</p>
-            </div>
-        </article>
-    `;
-});
+        articoli.forEach(art => {
+            grid.innerHTML += `
+                <article class="article-card" onclick="window.location='articolo.html?id=${art.id}'" style="cursor: pointer;">
+                    <div class="article-image-container">
+                        <img src="${art.immagine}" alt="${art.categoria}" class="article-image">
+                    </div>
+                    <div class="article-content">
+                        <h3 class="article-category">${art.categoria}</h3>
+                        <p class="article-date">${art.data}</p>
+                        <h2 class="article-title">${art.titolo}</h2>
+                        <p class="article-text">${art.anteprima}</p>
+                    </div>
+                </article>`;
+        });
     })
-    .catch(error => console.error('Errore nel caricamento degli articoli:', error));
-
-function openMenu() {
-    // Su mobile apre a schermo intero, su desktop al 40%
-    if (window.innerWidth <= 768) {
-        document.getElementById("sidebar").style.width = "100%";
-    } else {
-        document.getElementById("sidebar").style.width = "40%";
-    }
-    document.getElementById("overlay").style.display = "block";
-    document.getElementById("menuIcon").style.opacity = "0";
-}
-
-function closeMenu() {
-    document.getElementById("sidebar").style.width = "0";
-    document.getElementById("overlay").style.display = "none";
-    document.getElementById("menuIcon").style.opacity = "1";
-    document.getElementById("searchInput").style.display = "none";
-    document.getElementById("searchInput").value = "";
-    document.getElementById("searchResults").innerHTML = "";
-}
+    .catch(err => console.error("Errore articoli:", err));
 
 function toggleSearch() {
-    var searchInput = document.getElementById("searchInput");
-    if (searchInput.style.display === "none" || searchInput.style.display === "") {
-        searchInput.style.display = "block";
-        searchInput.focus();
-    } else {
-        searchInput.style.display = "none";
-        searchInput.value = "";
-        document.getElementById("searchResults").innerHTML = "";
+    const input = document.getElementById("searchInput");
+    if (input) {
+        input.style.display = (input.style.display === "none" || input.style.display === "") ? "block" : "none";
+        if (input.style.display === "block") input.focus();
     }
 }
 
 function searchArticles() {
-    var input = document.getElementById("searchInput").value.toLowerCase();
-    var resultsContainer = document.getElementById("searchResults");
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const resultsContainer = document.getElementById("searchResults");
+    if (!resultsContainer) return;
     resultsContainer.innerHTML = "";
     
-    if (input.length < 2) {
-        return;
-    }
+    if (input.length < 2) return;
     
-    // Cerca negli articoli dal JSON
-    var foundArticles = articoliData.filter(function(art) {
-        return art.titolo.toLowerCase().includes(input) || 
-               art.categoria.toLowerCase().includes(input) || 
-               art.anteprima.toLowerCase().includes(input) ||
-               art.contenuto.toLowerCase().includes(input);
+    const found = articoliData.filter(art => 
+        art.titolo.toLowerCase().includes(input) || art.categoria.toLowerCase().includes(input)
+    );
+    
+    found.slice(0, 3).forEach(art => {
+        const a = document.createElement("a");
+        a.href = "articolo.html?id=" + art.id;
+        a.className = "search-result-item";
+        a.textContent = art.titolo;
+        resultsContainer.appendChild(a);
     });
-    
-    if (foundArticles.length === 0) {
-        resultsContainer.innerHTML = "<p class='no-results'>Nessun risultato trovato</p>";
-        return;
-    }
-    
-    // Mostra massimo 3 risultati
-    var maxResults = Math.min(foundArticles.length, 3);
-    for (var i = 0; i < maxResults; i++) {
-        var art = foundArticles[i];
-        var resultItem = document.createElement("a");
-        resultItem.href = "articolo.html?id=" + art.id;
-        resultItem.className = "search-result-item";
-        resultItem.textContent = art.titolo + " (" + art.categoria + ")";
-        resultsContainer.appendChild(resultItem);
-    }
-    
-    // Se ci sono più di 3 risultati, mostra "di più"
-    if (foundArticles.length > 3) {
-        localStorage.setItem('searchResults', JSON.stringify(foundArticles));
-        
-        var moreLink = document.createElement("a");
-        moreLink.href = "ricerca.html";
-        moreLink.className = "search-more-link";
-        moreLink.textContent = "di più (" + (foundArticles.length - 3) + " altri)";
-        resultsContainer.appendChild(moreLink);
-    }
 }
 
-// ===== SCROLL ANIMATIONS =====
-// Intersection Observer per animazioni al scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+// --- 3. NEWSLETTER E INIZIALIZZAZIONE ---
+function openNewsletter() {
+    const nl = document.getElementById('newsletterOverlay');
+    if (nl) nl.classList.add('active');
+}
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-            // Aggiungi delay progressivo per le card
-            if (entry.target.classList.contains('article-card')) {
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, index * 100);
-            } else {
-                entry.target.classList.add('visible');
-            }
-        }
-    });
-}, observerOptions);
+function closeNewsletter() {
+    const nl = document.getElementById('newsletterOverlay');
+    if (nl) nl.classList.remove('active');
+}
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Osserva le card dopo che sono state caricate
-    setTimeout(() => {
-        document.querySelectorAll('.article-card').forEach(card => {
-            observer.observe(card);
-        });
-    }, 500);
-    
-    // Mostra popup newsletter dopo 2 secondi (solo se non già iscritto)
+    // Newsletter automatica dopo 2 secondi
     if (!localStorage.getItem('newsletterSubscribed')) {
-        setTimeout(() => {
-            document.getElementById('newsletterOverlay').classList.add('active');
-        }, 0);
+        setTimeout(openNewsletter, 2000);
+    }
+    
+    // Chiudi newsletter cliccando fuori dal box bianco
+    const nlOverlay = document.getElementById('newsletterOverlay');
+    if (nlOverlay) {
+        nlOverlay.addEventListener('click', (e) => {
+            if (e.target === nlOverlay) closeNewsletter();
+        });
     }
 });
 
-// ===== NEWSLETTER POPUP =====
-function closeNewsletter() {
-    document.getElementById('newsletterOverlay').classList.remove('active');
-}
-
-// URL del tuo Google Apps Script - SOSTITUISCI con il tuo URL dopo il deploy
-var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDJ-gAtJx77iI1iO7aeW-AGVsubv1rLG3pvuxhnmGOBaS9eFBUrlx1F7blMN7fiRD3sg/exec';
-
-function submitNewsletter(event) {
-    event.preventDefault();
-    var email = document.getElementById('newsletterEmail').value;
-    var submitBtn = document.querySelector('.newsletter-popup button');
-    
-    // Disabilita il bottone durante l'invio
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'INVIO IN CORSO...';
-    
-    // Invia richiesta a Google Apps Script
-    fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: email })
-    })
-    .then(function() {
-        console.log('Richiesta inviata con successo!');
-        
-        // Mostra messaggio di successo
-        document.getElementById('newsletterForm').style.display = 'none';
-        document.getElementById('newsletterSuccess').classList.add('show');
-        
-        // Salva che l'utente si è iscritto
-        localStorage.setItem('newsletterSubscribed', 'true');
-        
-        // Chiudi popup dopo 2 secondi
-        setTimeout(() => {
-            closeNewsletter();
-        }, 2000);
-    })
-    .catch(function(error) {
-        console.error('Errore:', error);
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'ISCRIVITI';
-        alert('Si è verificato un errore. Riprova più tardi.');
-    });
-}
-
-// Chiudi popup cliccando fuori
-document.getElementById('newsletterOverlay').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeNewsletter();
+document.addEventListener('DOMContentLoaded', function() {
+    const closeBtn = document.querySelector('.close-btn');
+    if (closeBtn) {
+        // Questo intercetta il tocco del dito prima ancora del "click"
+        closeBtn.addEventListener('touchstart', function(e) {
+            console.log("Tocco rilevato su mobile");
+            closeMenu();
+            e.preventDefault(); // Impedisce bug di scrolling
+        }, {passive: false});
     }
 });
-
-
 </script>
 </body>
 </html>
