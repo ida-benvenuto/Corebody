@@ -358,7 +358,7 @@ immagine_iniziale .titolo {
 }
 .search-results a{
     font-family: 'avenir', sans-serif;
-    font-size: 14px;
+    font-size: 20px;
     padding: 10px 20px;
 }
 /* Overlay per chiudere il menu */
@@ -393,36 +393,14 @@ immagine_iniziale .titolo {
     align-items: center;
     padding: 20px 30px;
     gap: 15px;
-    justify-content: flex-end;
-}
-
-.search-icon {
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    transition: 0.3s;
+    justify-content: flex-start;
 }
 
 .search-icon:hover {
     opacity: 0.7;
 }
 
-.search-input {
-    display: none;
-    flex: 1;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    font-size: 26px;
-    font-family: 'avenir', sans-serif;
-    background-color: transparent;
-    outline: none;
-}
 
-.search-input:focus {
-    outline: none;
-    box-shadow: none;
-}
 
 .search-results {
     padding:  15px;
@@ -852,3 +830,48 @@ nav#sotto sinistra img {
             margin-bottom: 40px;
             margin-block-start: 0;
         }
+        
+    .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Spinge il gruppo a sinistra e la X a destra */
+    padding: 15px 50px;
+    min-height: 60px;
+}
+
+.search-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Spazio fisso tra lente e scritta "Cerca..." */
+    flex: 1;   /* Permette al gruppo di occupare lo spazio necessario */
+}
+
+.search-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    flex-shrink: 0; /* Impedisce alla lente di rimpicciolirsi */
+}
+
+.search-input {
+    display: none;
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 26px;
+    font-family: 'avenir', sans-serif;
+    background-color: transparent;
+    outline: none;
+    width: 80%;
+}
+
+.search-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+.close-btn {
+    font-size: 35px;
+    cursor: pointer;
+    margin-left: 15px;
+}

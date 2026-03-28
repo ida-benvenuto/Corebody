@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/home.css">
   <link rel="stylesheet" href="css/responsive.css">
+      <link rel="stylesheet" href="css/about.css">
     <link rel="stylesheet" href="css/submission.css">
 </head>
 <body>
@@ -29,25 +30,28 @@
     <div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
     <!-- Menu Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <span class="close-btn" onclick="closeMenu()">&times;</span>
+<div id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <div class="search-group">
+            <img src="immagini/lente ricerca icon nera-05.png" alt="cerca" id="searchIcon" class="search-icon" onclick="toggleSearch()">
+            <input type="text" id="searchInput" class="search-input" placeholder="Cerca in Corebody..." onkeyup="searchArticles()">
         </div>
-        <div class="search-container">
-            <input type="text" id="searchInput" class="search-input" placeholder="Cerca tra gli articoli..." onkeyup="searchArticles()">
-            <img src="immagini/lente ricerca icon nera-05.png" alt="cerca" class="search-icon" onclick="toggleSearch()">
-        </div>
-        <div id="searchResults" class="search-results"></div>
-        <a href="categoria.html?cat=fashion">FASHION</a>
-        <a href="categoria.html?cat=beauty">BEAUTY AND WELLNESS</a>
-        <a href="categoria.html?cat=art">ART</a>
-        <a href="#">SHOP</a>
-        <div class="basso">
+        
+        <span class="close-btn" onclick="closeMenu()">&times;</span>
+    </div>
+    
+    <div id="searchResults" class="search-results"></div>
+    
+    <a href="categoria.html?cat=fashion">FASHION</a>
+    <a href="categoria.html?cat=beauty">BEAUTY AND WELLNESS</a>
+    <a href="categoria.html?cat=art">ART</a>
+    <a href="#">SHOP</a>
+    <div class="basso">
         <a href="about.html">ABOUT</a>
         <a href="submission.html">SUBMISSION</a>
         <a href="contact.html">CONTACT</a>
-        </div>
     </div>
+</div>
 
   <!-- HEADER -->
               <nav>
@@ -217,37 +221,60 @@ fetch('articoli.json')
     })
     .catch(error => console.error('Errore nel caricamento degli articoli:', error));
 
-function openMenu() {
-    // Su mobile apre a schermo intero, su desktop al 40%
-    if (window.innerWidth <= 768) {
-        document.getElementById("sidebar").style.width = "100%";
-    } else {
-        document.getElementById("sidebar").style.width = "40%";
+// --- 1. GESTIONE MENU SIDEBAR ---
+function toggleSearch() {
+    const input = document.getElementById("searchInput");
+    
+    if (input) {
+        // Se l'input è nascosto o non ha stile, lo mostriamo
+        if (input.style.display === "none" || input.style.display === "") {
+            input.style.display = "block";
+            input.focus();
+        } else {
+            // Se è già visibile, lo nascondiamo e svuotiamo la ricerca
+            input.style.display = "none";
+            input.value = "";
+            
+            // Opzionale: pulisce anche i risultati della ricerca sotto
+            const results = document.getElementById("searchResults");
+            if (results) results.innerHTML = "";
+        }
     }
-    document.getElementById("overlay").style.display = "block";
-    document.getElementById("menuIcon").style.opacity = "0";
 }
 
 function closeMenu() {
-    document.getElementById("sidebar").style.width = "0";
-    document.getElementById("overlay").style.display = "none";
-    document.getElementById("menuIcon").style.opacity = "1";
-    document.getElementById("searchInput").style.display = "none";
-    document.getElementById("searchInput").value = "";
-    document.getElementById("searchResults").innerHTML = "";
-}
-
-function toggleSearch() {
-    var searchInput = document.getElementById("searchInput");
-    if (searchInput.style.display === "none" || searchInput.style.display === "") {
-        searchInput.style.display = "block";
-        searchInput.focus();
-    } else {
-        searchInput.style.display = "none";
-        searchInput.value = "";
-        document.getElementById("searchResults").innerHTML = "";
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const menuIcon = document.getElementById("menuIcon");
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+    
+    if (sidebar) {
+        sidebar.style.width = "0";
+        overlay.style.display = "none";
+        if (menuIcon) menuIcon.style.opacity = "1";
+        
+        // Reset: nascondiamo l'input e puliamo i risultati
+        if (searchInput) {
+            searchInput.style.display = "none";
+            searchInput.value = "";
+        }
+        if (searchResults) searchResults.innerHTML = "";
     }
 }
+function openMenu() {
+    console.log("Apertura menu...");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const menuIcon = document.getElementById("menuIcon");
+    
+    if (sidebar && overlay) {
+        sidebar.style.width = (window.innerWidth <= 768) ? "100%" : "40%";
+        overlay.style.display = "block";
+        if (menuIcon) menuIcon.style.opacity = "0";
+    }
+}
+
 
 function searchArticles() {
     var input = document.getElementById("searchInput").value.toLowerCase();

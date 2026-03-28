@@ -7,9 +7,9 @@
     <link rel="icon" href="immagini/SIGLA NERA.png?v=2" sizes="32x32" type="image/png">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/home.css">
-    <link rel="stylesheet" href="css/about.css">
     <link rel="stylesheet" href="css/categoria.css">
     <link rel="stylesheet" href="css/responsive.css">
+        <link rel="stylesheet" href="css/about.css">
     <style>
         
         /* Header categoria */
@@ -176,25 +176,28 @@
     <div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
     <!-- Menu Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <span class="close-btn" onclick="closeMenu()">&times;</span>
+<div id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <div class="search-group">
+            <img src="immagini/lente ricerca icon nera-05.png" alt="cerca" id="searchIcon" class="search-icon" onclick="toggleSearch()">
+            <input type="text" id="searchInput" class="search-input" placeholder="Cerca in Corebody..." onkeyup="searchArticles()">
         </div>
-        <div class="search-container">
-            <input type="text" id="searchInput" class="search-input" placeholder="Cerca tra gli articoli..." onkeyup="searchArticles()">
-            <img src="immagini/lente ricerca icon nera-05.png" alt="cerca" class="search-icon" onclick="toggleSearch()">
-        </div>
-        <div id="searchResults" class="search-results"></div>
-        <a href="categoria.html?cat=fashion">FASHION</a>
-        <a href="categoria.html?cat=beauty">BEAUTY AND WELLNESS</a>
-        <a href="categoria.html?cat=art">ART</a>
-        <a href="#">SHOP</a>
-        <div class="basso">
+        
+        <span class="close-btn" onclick="closeMenu()">&times;</span>
+    </div>
+    
+    <div id="searchResults" class="search-results"></div>
+    
+    <a href="categoria.html?cat=fashion">FASHION</a>
+    <a href="categoria.html?cat=beauty">BEAUTY AND WELLNESS</a>
+    <a href="categoria.html?cat=art">ART</a>
+    <a href="#">SHOP</a>
+    <div class="basso">
         <a href="about.html">ABOUT</a>
         <a href="submission.html">SUBMISSION</a>
         <a href="contact.html">CONTACT</a>
-        </div>
     </div>
+</div>
 
   <!-- HEADER -->
               <nav>
@@ -427,7 +430,50 @@ document.title = displayName + ' - Corebody';
             }
         });
 
+
+
 // --- 1. GESTIONE MENU SIDEBAR ---
+// --- 1. GESTIONE MENU SIDEBAR ---
+function toggleSearch() {
+    const input = document.getElementById("searchInput");
+    
+    if (input) {
+        // Se l'input è nascosto o non ha stile, lo mostriamo
+        if (input.style.display === "none" || input.style.display === "") {
+            input.style.display = "block";
+            input.focus();
+        } else {
+            // Se è già visibile, lo nascondiamo e svuotiamo la ricerca
+            input.style.display = "none";
+            input.value = "";
+            
+            // Opzionale: pulisce anche i risultati della ricerca sotto
+            const results = document.getElementById("searchResults");
+            if (results) results.innerHTML = "";
+        }
+    }
+}
+
+function closeMenu() {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const menuIcon = document.getElementById("menuIcon");
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+    
+    if (sidebar) {
+        sidebar.style.width = "0";
+        overlay.style.display = "none";
+        if (menuIcon) menuIcon.style.opacity = "1";
+        
+        // Reset: nascondiamo l'input e puliamo i risultati
+        if (searchInput) {
+            searchInput.style.display = "none";
+            searchInput.value = "";
+        }
+        if (searchResults) searchResults.innerHTML = "";
+    }
+}
 function openMenu() {
     console.log("Apertura menu...");
     const sidebar = document.getElementById("sidebar");
@@ -441,27 +487,6 @@ function openMenu() {
     }
 }
 
-function closeMenu() {
-    console.log("Chiusura menu...");
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("overlay");
-    const menuIcon = document.getElementById("menuIcon");
-    const searchInput = document.getElementById("searchInput");
-    const searchResults = document.getElementById("searchResults");
-    
-    if (sidebar && overlay) {
-        sidebar.style.width = "0";
-        overlay.style.display = "none";
-        if (menuIcon) menuIcon.style.opacity = "1";
-        
-        // Reset ricerca quando chiudi
-        if (searchInput) {
-            searchInput.style.display = "none";
-            searchInput.value = "";
-        }
-        if (searchResults) searchResults.innerHTML = "";
-    }
-}
 
 // --- 2. RICERCA E ARTICOLI ---
 var articoliData = [];
@@ -490,13 +515,6 @@ fetch('articoli.json')
     })
     .catch(err => console.error("Errore articoli:", err));
 
-function toggleSearch() {
-    const input = document.getElementById("searchInput");
-    if (input) {
-        input.style.display = (input.style.display === "none" || input.style.display === "") ? "block" : "none";
-        if (input.style.display === "block") input.focus();
-    }
-}
 
 function searchArticles() {
     const input = document.getElementById("searchInput").value.toLowerCase();
