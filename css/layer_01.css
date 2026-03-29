@@ -201,7 +201,7 @@
     text-align: left;
     align-self: flex-end;  /* Allinea il blocco di testo a destra */
     width: 85%;            /* Coerente con la larghezza delle foto */
-    margin-bottom: 20px;   /* Distanza dalla foto successiva */
+    margin-bottom: 0;   /* Distanza dalla foto successiva */
     
     position: static;      /* Qui non serve absolute, segue il flusso flex */
       
