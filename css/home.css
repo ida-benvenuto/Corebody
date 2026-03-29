@@ -523,6 +523,7 @@ immagine_iniziale .titolo {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+       text-align: justify;
 }
 /* Il contenitore che "taglia" lo zoom */
 .article-image-container {
