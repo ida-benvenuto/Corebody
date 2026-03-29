@@ -81,7 +81,6 @@ fetch('articoli.json')
     })
     .catch(err => console.error("Errore articoli:", err));
 
-
 function searchArticles() {
     const input = document.getElementById("searchInput").value.toLowerCase();
     const resultsContainer = document.getElementById("searchResults");

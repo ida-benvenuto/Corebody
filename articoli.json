@@ -11,12 +11,13 @@
     },
     {
         "id": 2,
-        "titolo": "Titolo dell'articolo 2",
+        "titolo": "Layer_01",
         "categoria": "FASHION",
-        "data": "15 gennaio 2023",
+        "data": "29 marzo 2026",
         "immagine": "immagini/articolo_2.jpeg",
-        "anteprima": "Anis dolut et voluptas eos imet audis dolomet, vimi fugiae eaturi aut dignetur pelit et delor sum qui blanto quunt lique nimamet molupta aut exerenim volecia cum explit laborio.",
-        "contenuto": "Contenuto completo del secondo articolo. Qui puoi aggiungere tutto il testo, le descrizioni, i dettagli che vuoi mostrare quando l'utente apre l'articolo."
+        "anteprima": "Ogni giorno il corpo viene ridefinito attraverso l’atto dell’abbigliarsi, in un processo continuo che accompagna ogni momento della giornata. Gli indumenti, anche nei gesti più intimi come il dormire",
+        "contenuto": "Ogni giorno il corpo viene ridefinito attraverso l’atto dell’abbigliarsi, in un processo continuo che accompagna ogni momento della giornata. Gli indumenti, anche nei gesti più intimi come il dormire, intervengono nella costruzione dell’esperienza corporea, determinando il comfort, la percezione di sé e le dinamiche dello sguardo altrui. Categorie di abbigliamento spesso considerate marginali, in quanto associate a una funzione utilitaria, si rivelano invece centrali nella definizione della quotidianità: underwear, nightwear, sportwear. L’underwear si configura come lo strato primario di questa costruzione. Invisibile ma determinante, agisce direttamente sulla morfologia e sulla percezione del corpo, operando a stretto contatto con la pelle. È il livello più intimo dell’abbigliamento, quello a cui viene affidata la gestione dell’intimità e della relazione più immediata tra corpo e materia tessile.",
+        "url": "articoli/layer_01.html"
     },
     {
         "id": 3,
