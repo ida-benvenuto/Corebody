@@ -517,6 +517,11 @@ immagine_iniziale .titolo {
     font-size: 16px;
     line-height: 1.6;
     color: #333;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 /* Il contenitore che "taglia" lo zoom */
 .article-image-container {
