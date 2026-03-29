@@ -114,7 +114,40 @@
     /* Colore: Nero perché ora lo sfondo è bianco e le foto sono "intere" */
     color: white; 
 }
-
+.caption_basso_sinistra {
+    position: absolute;
+    bottom: 60px;      /* Distanza dal bordo inferiore della foto */
+    right: 40px;        /* Distanza dal bordo sinistro della foto */
+    z-index: 10;       /* Assicura che stia sopra l'immagine */
+    
+    /* Tipografia */
+    font-family: 'Avenir', sans-serif;
+    font-size: 12px;   /* Dimensione bilanciata per l'effetto editorial */
+    line-height: 1.2;  /* Interlinea stretta come nei credits */
+    font-weight: 100;  /* Molto sottile */
+    letter-spacing: 0.02em;
+    text-transform: none;
+    text-align: end;
+    /* Colore: Nero perché ora lo sfondo è bianco e le foto sono "intere" */
+    color: white; 
+}
+.caption_alto_destra {
+    position: absolute;
+    top: 60px;      /* Distanza dal bordo inferiore della foto */
+    right: 40px;        /* Distanza dal bordo sinistro della foto */
+    z-index: 10;       /* Assicura che stia sopra l'immagine */
+    
+    /* Tipografia */
+    font-family: 'Avenir', sans-serif;
+    font-size: 12px;   /* Dimensione bilanciata per l'effetto editorial */
+    line-height: 1.2;  /* Interlinea stretta come nei credits */
+    font-weight: 100;  /* Molto sottile */
+    letter-spacing: 0.02em;
+    text-transform: none;
+    text-align: end;
+    /* Colore: Nero perché ora lo sfondo è bianco e le foto sono "intere" */
+    color: white; 
+}
 /* --- RESPONSIVE --- */
 @media (max-width: 900px) {
     .prima_pagina, .seconda_pagina {
@@ -314,4 +347,112 @@
     .left_griglia .caption {
         width: 100%;       /* Su mobile meglio occupare tutto lo spazio */
     }
+}
+
+/* ══════════════════════════════════════════════════════════
+   PARTE DESTRA - GRIGLIA SFALSATA (Sotto la foto a sinistra)
+   ══════════════════════════════════════════════════════════ */
+
+.right_griglia_due {
+    flex: 0 0 50%;
+    display: flex;
+    flex-direction: column;
+    /* Usiamo lo stesso padding della colonna sinistra per simmetria */
+    padding: 60px; 
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+
+/* Div vuoto superiore: occupa il 50% dell'altezza per spingere giù la foto */
+.hh {
+    flex: 1; 
+    min-height: 400px; /* Valore indicativo per bilanciare la foto a sinistra */
+}
+
+/* Contenitore della foto e didascalia */
+.colonna_due {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.right_griglia_due img {
+    width: 100%;            /* Occupa tutta la larghezza disponibile del suo 50% */
+    height: auto;
+    display: block;
+    margin-top: 60px;
+}
+
+.caption_dark {
+    font-family: 'Avenir', sans-serif;
+    font-size: 11px;        /* Leggermente più piccola come da stile editorial */
+    line-height: 1.3;
+    font-weight: 100;
+    letter-spacing: 0.02em;
+    color: #000;
+    
+    text-align: left;
+    margin-top: 20px;       /* Spazio tra foto e testo */
+    width: 100%;            /* Allineata alla larghezza della foto sopra */
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .right_griglia_due {
+        padding: 20px;
+    }
+    .hh {
+        display: none;      /* Su mobile eliminiamo il vuoto per non allungare troppo */
+    }
+}
+/* ══════════════════════════════════════════════════════════
+   LAYOUT DOPPIA FOTO VERTICALE (Destra/Sinistra Pagina)
+   ══════════════════════════════════════════════════════════ */
+/* Il contenitore che racchiude sinistra e destra deve avere display: flex; align-items: stretch; */
+
+.left_griglia_due {
+    flex: 0 0 50%;
+    display: grid;
+    /* Creiamo due righe: la prima si adatta al contenuto, la seconda anche */
+    grid-template-rows: auto auto; 
+    /* Centra la griglia intera verticalmente nella pagina */
+    align-content: center; 
+    /* Centra le foto orizzontalmente */
+    justify-items: center; 
+    padding: 41px 40px 0 40px; /* Spazio intorno alla griglia */
+    box-sizing: border-box;
+}
+
+.left_griglia_due .colonna_due {
+    width: 100%; /* Controlla quanto sono grandi le foto */
+    display: contents; /* Permette alle immagini di obbedire direttamente alla Grid del genitore */
+}
+
+.left_griglia_due img {
+    width: 100%;
+    height: auto;
+    display: block;
+/* Spazio tra la foto e la caption */
+}
+
+.left_griglia_due img:first-of-type {
+    margin-bottom: 70px; /* Spazio tra la prima foto e la caption */
+}
+
+
+/* Centratura perfetta della didascalia */
+.caption_t {
+    font-family: 'Avenir', sans-serif;
+    font-size: 10px;
+    font-weight: 100;
+    color: #000;
+    margin-top: 30px;
+    
+    /* Centra il testo verticalmente nel suo spazio (1fr) */
+    display: flex;
+    align-items: center; 
+    
+    text-align: left;
+    width: 100%; /* Allineata alla larghezza delle immagini */
 }
