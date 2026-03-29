@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corebody - Nuda Tela</title>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/about.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/nudatela.css">
+    <link rel="stylesheet" href="../css/layer_01.css">
+    <style>
+    </style>
+</head>
+    <body>
+    <!-- Popup Newsletter -->
+    <div id="newsletterOverlay" class="newsletter-overlay">
+        <div class="newsletter-popup">
+            <span class="newsletter-close" onclick="closeNewsletter()">&times;</span>
+            <h2>BE THE FIRST TO SEE</h2>
+            <p>Resta aggiornato sulle novità di Corebody</p>
+            <form id="newsletterForm" onsubmit="submitNewsletter(event)">
+                <input type="email" id="newsletterEmail" placeholder="Inserisci la tua email" required>
+                <button type="submit">JOIN US</button>
+            </form>
+            <p class="newsletter-success" id="newsletterSuccess">Grazie per esserti iscritto!</p>
+        </div>
+    </div>
+
+    <!-- Overlay per chiudere il menu -->
+    <div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+<div id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <div class="search-group">
+            <img src="../immagini/lente ricerca icon nera-05.png" alt="cerca" id="searchIcon" class="search-icon" onclick="toggleSearch()">
+            <input type="text" id="searchInput" class="search-input" placeholder="Cerca in Corebody..." onkeyup="searchArticles()">
+        </div>
+        
+        <img class="close-btn" src="immagini/X.png" alt="Chiudi" onclick="closeMenu()">
+    </div>
+    
+    <div id="searchResults" class="search-results"></div>
+    
+    <a href="categoria.html?cat=fashion">FASHION</a>
+    <a href="categoria.html?cat=beauty">BEAUTY AND WELLNESS</a>
+    <a href="categoria.html?cat=art">ART</a>
+    <a href="#">SHOP</a>
+    <div class="basso">
+        <a href="about.html">ABOUT</a>
+        <a href="submission.html">SUBMISSION</a>
+        <a href="contact.html">CONTACT</a>
+    </div>
+</div>
+
+  <!-- HEADER -->
+              <nav>
+                <ul>
+                    <destra>
+                        <img id="menuIcon" src="../immagini/menu a tendina icon nera [Convertito]-04.png" alt="menu" style="height: 30px; width: 30px;" onclick="openMenu()">
+                    </destra>
+                    <centro>
+                        <a href="../index.html"><img src="../immagini/LOGO CENTRATO.png" alt="Corebody" class="cb-logo"></a>
+                    </centro>
+                    <sinistra>
+                        <a href="https://www.instagram.com/core.body_/?utm_source=ig_web_button_share_sheet" target="_blank"><img src="../immagini/ig icon nera-01.png" alt="instagram"></a>
+                        <a href="https://www.tiktok.com/@core.body_?_r=1&_t=ZN-94shnajRxjC" target="_blank"><img src="../immagini/tik tok icon nera-02.png" alt="tiktok"></a>
+                        <a href="https://pin.it/76AwW3rE0" target="_blank"><img src="../immagini/pinterest icon nera-03.png" alt="pinterest"></a>
+                    </sinistra>
+                </ul>
+            </nav>
+<main>
+    <section class="prima_pagina">
+        <div class="left">
+            <div class="title-wrapper">
+                <h1 class="title">layer_01</h1>
+            </div>
+
+            <div class="credits">
+                <p><strong>Art director and stylist:</strong> Francesca Viteritti (@francesca_viteritti_)</p>
+                <p><strong>Photographer:</strong> Chiara Filippi (@chiarafilippi.ph)</p>
+                <p><strong>Model:</strong> Polina by Fashion Artwise (@fashionartwise)</p>
+                <p><strong>Make-up:</strong> Alessandra Comentale (@alecomentale_mua)</p>
+            </div>
+        </div>
+
+        <div class="right">
+            <img src="../Francesca_2°shoot/J1A9803.jpg" alt="Nuda Tela editorial">
+            <div class="caption">
+                bralette: Ancora lingerie<br>
+                collant, gonna e ballerine: stylist's own
+            </div>
+        </div>
+    </section>
+    <section class="testo">
+        <p>
+           Ogni giorno il corpo viene ridefinito attraverso l’atto dell’abbigliarsi, in un processo continuo che accompagna ogni momento della giornata. Gli indumenti, anche nei gesti più intimi come il dormire, intervengono nella costruzione dell’esperienza corporea, determinando il comfort, la percezione di sé e le dinamiche dello sguardo altrui.
+<br>Categorie di abbigliamento spesso considerate marginali, in quanto associate a una funzione utilitaria, si rivelano invece centrali nella definizione della quotidianità: underwear, nightwear, sportwear.
+<br>L’underwear si configura come lo strato primario di questa costruzione. Invisibile ma determinante, agisce direttamente sulla morfologia e sulla percezione del corpo, operando a stretto contatto con la pelle. È il livello più intimo dell’abbigliamento, quello a cui viene affidata la gestione dell’intimità e della relazione più immediata tra corpo e materia tessile.
+        </p>
+    </section>
+
+<section class="terza_pagina">
+    <img src="../Francesca_2°shoot/J1A0099.jpg" alt="Nuda Tela editorial full">
+            <div class="caption">
+                bralette: Ancora lingerie<br>
+                collant, gonna e ballerine: stylist's own
+            </div>
+</section>
+<section class="prima_pagina">
+    <div class="left_griglia">
+        <img src="../Francesca_2°shoot/J1A9126.jpg" alt="Nuda Tela editorial full">
+        <div class="caption">
+        </div>
+        <img src="../Francesca_2°shoot/J1A9160.jpg" alt="Nuda Tela editorial full">
+        <div class="caption">
+            baby bloomers: Try again<br>
+            ballerine, calzini, collant e camicia: stylist's own
+        </div>
+    </div>
+
+    <div class="right">
+        <img src="../Francesca_2°shoot/J1A9507.jpg" alt="Nuda Tela editorial">
+        <div class="caption">
+                baby bloomers: Try again<br>
+                ballerine, calzini, collant e camicia: stylist's own
+        </div>
+    </div>
+</section>
+<section class="sesta_pagina">
+    <div class="left_full">
+        <img src="../Francesca_2°shoot/J1A9694.jpg" alt="Nuda Tela editorial full">
+        <div class="caption">
+            bralette: Ancora lingerie<br>
+            collant e gonna: stylist's own
+        </div>
+    </div>
+
+    <div class="right_framed_1">
+        <div class="frame_1">
+            <div class="caption_alto_destra_p">
+                bralette: Ancora lingerie<br>
+                capri pants: stylist's own<br>
+                collana: Try again
+            </div>
+            <img src="../Francesca_2°shoot/J1A0415 copia 4.jpg" style="transform: ScaleX(-1);" alt="Nuda Tela editorial framed">
+        </div>
+    </div>
+</section>
+<section class="seconda_pagina">
+        <div class="right_griglia_due">
+        <div class="hh"></div>
+        <div class="colonna_due">
+         <img src="../Francesca_2°shoot/J1A0625.jpg" style="transform: scaleX(-1);" alt="Nuda Tela editorial framed">
+        <div class="caption_alto_destra_p"></div>
+            bralette: Ancora lingerie<br>
+            collant: stylist's own<br>
+        </div>
+        </div>
+    </div>
+    <div class="left_full">
+        <img  src="../Francesca_2°shoot/J1A0057.jpg" style="transform: scaleX(-1);" alt="Nuda Tela editorial full">
+        <div class="caption">
+            bralette: Ancora lingerie<br>
+            collant: stylist's own<br>
+        </div>
+    </div>
+
+           
+</section>
+
+</main>
+            <section class="chiusa">
+            <div class="sezione_finale">
+            <div class="scritta_centro">
+                            <a href="index.html">
+                                <img src="../immagini/LOGO CENTRATO.png" alt="Corebody" class="titolo">
+                            </a>
+            <div class="basso">
+                <a href="about.html" class="about-line">ABOUT</a>
+                <a href="submission.html">SUBMISSION</a>
+                <a href="contact.html">CONTACT</a>
+                </div>
+            </div>
+            <div class="sotto" >
+              <nav id="sotto">
+                <ul>
+                    <destra>
+                        <p style="font-weight: bolder;">
+                            Be the first to see
+                        </p>
+                        <p> resta aggiornato sulle novità di Corebody </p>
+                        <a href="#" class="join-us-link" onclick="openNewsletter(); return false;">JOIN US</a>
+                    </destra>
+                    <centro>
+                        <p> Credits fotografici</p>
+                    </centro>
+                    <sinistra>
+                        <a href="https://www.instagram.com/core.body_/?utm_source=ig_web_button_share_sheet" target="_blank"><img src="../immagini/ig icon nera-01.png" alt="instagram"></a>
+                        <a href="https://www.tiktok.com/@core.body_?_r=1&_t=ZN-94shnajRxjC" target="_blank"><img src="../immagini/tik tok icon nera-02.png" alt="tiktok"></a>
+                        <a href="https://pin.it/76AwW3rE0" target="_blank"><img src="../immagini/pinterest icon nera-03.png" alt="pinterest"></a>
+                    </sinistra>
+                </ul>
+            </nav>
+            </div>
+            </div>
+        </section>
+
+<script src="../funzioni.js"></script>
+</body>
+</html>
