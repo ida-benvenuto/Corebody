@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'titolo';
+    src: url('../font/AvenirNext-UltraLight.ttf ')format('opentype');
+}
+h1{
+    font-family: 'titolo', sans-serif;
+    font-size: 60pt;
+}
 /* Contenitore principale: ora l'altezza è libera */
 .prima_pagina {
     display: flex;
