@@ -158,7 +158,7 @@ function openMenu() {
     const menuIcon = document.getElementById("menuIcon");
     
     if (sidebar) {
-        sidebar.style.width = "60%"; 
+        sidebar.style.width = "37%"; 
         if (overlay) overlay.style.display = "block";
         if (menuIcon) menuIcon.style.opacity = "0"; // Nasconde l'icona menu stessa
         
