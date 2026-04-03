@@ -526,12 +526,6 @@
         function shareOnPinterest() {
             window.open('https://pinterest.com/pin/create/button/?url=' + encodeURIComponent(window.location.href), '_blank');
         }
-
-// Funzione per aprire il popup newsletter
-function openNewsletter() {
-    document.getElementById('newsletterOverlay').classList.add('active');
-}
-
 // Variabile globale per gli articoli
 var articoliData = [];
 
@@ -557,59 +551,6 @@ fetch('articoli.json')
         });
     })
     .catch(error => console.error('Errore nel caricamento degli articoli:', error));
-// --- 1. GESTIONE MENU SIDEBAR ---
-function toggleSearch() {
-    const input = document.getElementById("searchInput");
-    
-    if (input) {
-        // Se l'input è nascosto o non ha stile, lo mostriamo
-        if (input.style.display === "none" || input.style.display === "") {
-            input.style.display = "block";
-            input.focus();
-        } else {
-            // Se è già visibile, lo nascondiamo e svuotiamo la ricerca
-            input.style.display = "none";
-            input.value = "";
-            
-            // Opzionale: pulisce anche i risultati della ricerca sotto
-            const results = document.getElementById("searchResults");
-            if (results) results.innerHTML = "";
-        }
-    }
-}
-
-function closeMenu() {
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("overlay");
-    const menuIcon = document.getElementById("menuIcon");
-    const searchInput = document.getElementById("searchInput");
-    const searchResults = document.getElementById("searchResults");
-    
-    if (sidebar) {
-        sidebar.style.width = "0";
-        overlay.style.display = "none";
-        if (menuIcon) menuIcon.style.opacity = "1";
-        
-        // Reset: nascondiamo l'input e puliamo i risultati
-        if (searchInput) {
-            searchInput.style.display = "none";
-            searchInput.value = "";
-        }
-        if (searchResults) searchResults.innerHTML = "";
-    }
-}
-function openMenu() {
-    console.log("Apertura menu...");
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("overlay");
-    const menuIcon = document.getElementById("menuIcon");
-    
-    if (sidebar && overlay) {
-        sidebar.style.width = (window.innerWidth <= 768) ? "100%" : "37%";
-        overlay.style.display = "block";
-        if (menuIcon) menuIcon.style.opacity = "0";
-    }
-}
 
 function searchArticles() {
     var input = document.getElementById("searchInput").value.toLowerCase();
@@ -655,60 +596,7 @@ function searchArticles() {
         resultsContainer.appendChild(moreLink);
     }
 }
-function closeNewsletter() {
-    document.getElementById('newsletterOverlay').classList.remove('active');
-}
-
-// URL del tuo Google Apps Script - SOSTITUISCI con il tuo URL dopo il deploy
-var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDJ-gAtJx77iI1iO7aeW-AGVsubv1rLG3pvuxhnmGOBaS9eFBUrlx1F7blMN7fiRD3sg/exec';
-
-function submitNewsletter(event) {
-    event.preventDefault();
-    var email = document.getElementById('newsletterEmail').value;
-    var submitBtn = document.querySelector('.newsletter-popup button');
-    
-    // Disabilita il bottone durante l'invio
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'INVIO IN CORSO...';
-    
-    // Invia richiesta a Google Apps Script
-    fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: email })
-    })
-    .then(function() {
-        console.log('Richiesta inviata con successo!');
-        
-        // Mostra messaggio di successo
-        document.getElementById('newsletterForm').style.display = 'none';
-        document.getElementById('newsletterSuccess').classList.add('show');
-        
-        // Salva che l'utente si è iscritto
-        localStorage.setItem('newsletterSubscribed', 'true');
-        
-        // Chiudi popup dopo 2 secondi
-        setTimeout(() => {
-            closeNewsletter();
-        }, 2000);
-    })
-    .catch(function(error) {
-        console.error('Errore:', error);
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'ISCRIVITI';
-        alert('Si è verificato un errore. Riprova più tardi.');
-    });
-}
-
-// Chiudi popup cliccando fuori
-document.getElementById('newsletterOverlay').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeNewsletter();
-    }
-});
-    </script>
+  </script>
+  <script src="funzioni.js"></script>
 </body>
 </html>

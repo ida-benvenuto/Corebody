@@ -152,21 +152,6 @@ articoliFiltrati.forEach(function(art) {
     `;
 });
 
-function openMenu() {
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("overlay");
-    const menuIcon = document.getElementById("menuIcon");
-    
-    if (sidebar) {
-        sidebar.style.width = "37%"; 
-        if (overlay) overlay.style.display = "block";
-        if (menuIcon) menuIcon.style.opacity = "0"; // Nasconde l'icona menu stessa
-        
-        // AGGIUNGI QUESTA RIGA:
-        document.body.classList.add("menu-aperto");
-    }
-}
-
 function closeMenu() {
     const sidebar = document.getElementById("sidebar");
     const overlay = document.getElementById("overlay");
@@ -181,3 +166,24 @@ function closeMenu() {
         document.body.classList.remove("menu-aperto");
     }
 }
+
+function updateSidebar() {
+    if (sidebar && overlay) {
+        // Se la finestra è 768px o meno -> 100%, altrimenti 37%
+        sidebar.style.width = (window.innerWidth <= 768) ? "100%" : "37%";
+    }
+}
+
+// Esegui la funzione quando apri il menu
+openBtn.onclick = () => {
+    updateSidebar();
+    overlay.style.display = "block";
+    if (menuIcon) menuIcon.style.opacity = "0";
+};
+
+// Opzionale: aggiorna la larghezza se l'utente ruota il telefono o ridimensiona il PC
+window.addEventListener('resize', () => {
+    if (sidebar.style.width !== "0px" && sidebar.style.width !== "") {
+        updateSidebar();
+    }
+});
