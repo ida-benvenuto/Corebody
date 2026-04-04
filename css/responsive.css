@@ -3,7 +3,9 @@
    MOBILE
    ============================================================ */
 @media (max-width: 845px) {
-    
+    * {
+    outline: 1px solid red !important;
+}
     /* 1. Header e Navigazione */
     immagine_iniziale .titolo {
         max-width: 90vw; /* Il logo occupa più spazio su schermi piccoli */
@@ -28,13 +30,22 @@
     .articles-grid {
         grid-template-columns: 1fr; /* Una sola colonna per massima leggibilità */
     }
+    .article-title {
+        font-size: 24px; /* Titoli più grandi per il tocco */
+    }
+    .article-text {        
+        font-size: 14px;
 
+    }
+    .article-date {
+        font-size: 12px;
+    }
     .article-content {
         padding: 20px; /* Aumenta lo spazio per il tocco */
     }
 
     .article-category {
-        font-size: 28px;
+        font-size: 24px;
     }
 
     /* 4. Sidebar Menu */
@@ -43,14 +54,14 @@
     }
 
     .sidebar a {
-        font-size: 32px;
-        padding: 15px 30px;
+        font-size: 20px;
+        padding: 0px x0px;
     }
 
     .basso {
         flex-direction: column; /* I link About/Contact si mettono in verticale */
         gap: 15px;
-        padding-bottom: 30px;
+        padding-bottom: 0px;
     }
 
     .basso a {
@@ -111,7 +122,7 @@
     align-items: center;
     justify-content: space-between;
     /* Riduciamo o azzeriamo il padding laterale per un controllo millimetrico */
-    padding: 15px 30px; 
+    padding: 0; 
     min-height: 60px;
     width: 100%;
     box-sizing: border-box;
@@ -130,7 +141,7 @@
     height: 25px;
     cursor: pointer;
     /* Assicuriamoci che non ci siano margini residui */
-    margin: 20px; 
+   margin-left: 11px;; 
 }
 .search-results a {
 font-family: 'avenir', sans-serif;
@@ -144,7 +155,8 @@ padding: 10px 20px;
     cursor: pointer;
     /* Rimuoviamo il posizionamento absolute che avevi in base.css */
     position: static !important; 
-    margin: 0 !important;
+    margin-right:11px !important;
+     margin-left: 0 !important;
 }
 
 /* Individuiamo l'immagine dentro immagine_iniziale */
@@ -264,7 +276,7 @@ height: 100vh;
 
     /* 3. TITOLI E PARAGRAFI */
     .cb-section-title {
-        font-size: 30px; /* Più piccolo per smartphone */
+        font-size: 27px; /* Più piccolo per smartphone */
         text-align: left;
         margin-top: 40px;
         margin-bottom: 15px;
@@ -298,11 +310,12 @@ height: 100vh;
         height: 25px;
         margin: 0 20px;
     }
-    .cb-logo {
-        margin-left: 1;
-        max-width: 50%;
-        margin-top:40px;
-    }
+.cb-logo {
+margin-left: 1;
+max-width: 70%;
+margin: 0;
+margin-left: 34px;
+}
     nav ul sinistra img{
         margin-bottom: -30px;
 width: 23px !important ;
@@ -347,5 +360,46 @@ nav ul destra img{
     height: 20px  !important;
 
 }
+nav#sotto destra p, .join-us-link, nav#sotto centro p {
+margin-left: 35px;
+margin-bottom: 8px;
+font-size: 16px;
+color: #222;
+}
+nav#sotto destra p, .join-us-link, nav#sotto centro p {
+margin-left: 35px;
+margin-bottom: 8px;
+font-size: 14px;
+color: #222;
+}
 
+nav#sotto destra p, .join-us-link, nav#sotto centro p {
+margin-left: 35px;
+margin-bottom: 2px;
+font-size: 11px;
+color: #222;
+}
+
+
+.search-input{
+    font-size: 18px;
+}
+
+.search-result-item {
+display: block;
+font-family: 'avenir', sans-serif;
+padding: 8px 0;
+font-size: 23px;
+color: #333;
+text-decoration: none;
+white-space: normal;
+word-wrap: break-word;
+overflow: hidden;
+text-overflow: ellipsis;
+margin-left: 2px;
+}
+
+.centro{
+    align-items: center;
+}
 }
