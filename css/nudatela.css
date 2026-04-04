@@ -528,7 +528,7 @@ h1{
 
 }
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 845px) {
     .image-container-final, .caption_finale {
         width: 90%;
     }

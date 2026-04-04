@@ -9,7 +9,7 @@ function vaiAllArticolo(urlDesktop, urlMobile) {
     console.log("URL Mobile:", urlMobile);
 
     // Se siamo sotto i 768px E esiste un URL mobile, usa quello
-    if (window.innerWidth <= 768 && urlMobile && urlMobile !== "undefined" && urlMobile !== "") {
+    if (window.innerWidth <= 850 && urlMobile && urlMobile !== "undefined" && urlMobile !== "") {
         window.location.href = urlMobile;
     } else {
         // Altrimenti vai su quello desktop
@@ -67,7 +67,7 @@ function openMenu() {
     const sidebar = document.getElementById("sidebar");
     const overlay = document.getElementById("overlay");
     if (sidebar && overlay) {
-        sidebar.style.width = (window.innerWidth <= 768) ? "100%" : "37%";
+        sidebar.style.width = (window.innerWidth <= 845) ? "100%" : "37%";
         overlay.style.display = "block";
         document.body.classList.add("menu-aperto");
     }
