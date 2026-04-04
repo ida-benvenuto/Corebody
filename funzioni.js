@@ -64,20 +64,23 @@ fetch('articoli.json')
         const grid = document.getElementById('articlesGrid');
         if (!grid) return;
         
-        articoli.forEach(art => {
-            grid.innerHTML += `
-                <article class="article-card" onclick="window.location='${art.url}'" style="cursor: pointer;">
-                    <div class="article-image-container">
-                        <img src="${art.immagine}" alt="${art.categoria}" class="article-image">
-                    </div>
-                    <div class="article-content">
-                        <h3 class="article-category">${art.categoria}</h3>
-                        <p class="article-date">${art.data}</p>
-                        <h2 class="article-title">${art.titolo}</h2>
-                        <p class="article-text">${art.anteprima}</p>
-                    </div>
-                </article>`;
-        });
+            // Modifica la riga dell'onclick nel tuo loop forEach
+            articoli.forEach(art => {
+                grid.innerHTML += `
+                    <article class="article-card" 
+                            onclick="vaiAllArticolo('${art.url}', '${art.url_mobile}')" 
+                            style="cursor: pointer;">
+                        <div class="article-image-container">
+                            <img src="${art.immagine}" alt="${art.categoria}" class="article-image">
+                        </div>
+                        <div class="article-content">
+                            <h3 class="article-category">${art.categoria}</h3>
+                            <p class="article-date">${art.data}</p>
+                            <h2 class="article-title">${art.titolo}</h2>
+                            <p class="article-text">${art.anteprima}</p>
+                        </div>
+                    </article>`;
+            });
     })
     .catch(err => console.error("Errore articoli:", err));
 
