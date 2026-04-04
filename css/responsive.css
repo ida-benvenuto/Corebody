@@ -1,8 +1,8 @@
 
 /* ============================================================
-   MOBILE (Sotto i 768px)
+   MOBILE
    ============================================================ */
-@media (max-width: 768px) {
+@media (max-width: 845px) {
     
     /* 1. Header e Navigazione */
     immagine_iniziale .titolo {
@@ -151,24 +151,7 @@ padding: 10px 20px;
     position: static !important; 
     margin: 0 !important;
 }
-}
 
-/* ============================================================
-   SMALL MOBILE (Sotto i 480px)
-   ============================================================ */
-@media (max-width: 480px) {
-    .article-title {
-        font-size: 22px;
-    }
-    
-    .article-text {
-        -webkit-line-clamp: 3; /* Mostra meno righe di anteprima su schermi minuscoli */
-          line-clamp: 3;
-    }
-}
-
-
-@media (max-width: 768px) {
 /* Individuiamo l'immagine dentro immagine_iniziale */
 immagine_iniziale > img:first-of-type {
 /* Sostituisci 'FOTO_MOBILE.png' con il nome del nuovo file */
@@ -180,11 +163,7 @@ width: 100%;
 height: 100vh;
 
 }
-}
-/* ============================================================
-   DESIGN RESPONSIVE PER MOBILE (Sotto i 768px)
-   ============================================================ */
-@media (max-width: 768px) {
+
 
     /* 1. Reset del contenitore principale */
     .sezione_finale {
@@ -260,19 +239,11 @@ height: 100vh;
     nav#sotto destra p, .join-us-link {
         margin-left: 0 !important;
     }
-}
-@media (max-width: 768px) {
+
     /* Nasconde le icone social in alto quando la sidebar è attiva */
     body.menu-aperto nav sinistra {
         display: none !important;
     }
-}
-
-/* ============================================================
-   RESPONSIVE DESIGN - PAGINA ABOUT
-   ============================================================ */
-
-@media (max-width: 768px) {
     
     /* 1. NAVIGAZIONE SUPERIORE */
     /* Nasconde i social in alto quando il menu è aperto (come richiesto) */
