@@ -239,17 +239,12 @@ height: 100vh;
     body.menu-aperto nav sinistra {
         display: none !important;
     }
-    
-    /* 1. NAVIGAZIONE SUPERIORE */
-    /* Nasconde i social in alto quando il menu è aperto (come richiesto) */
-    body.menu-aperto nav sinistra {
-        display: none !important;
-    }
+
 
     nav ul {
         padding: 10px 20px;
     }
-    nav sinistra img {
+    nav sinistra img:not(nav#sotto sinistra img ){
         display: none;
     }
 
