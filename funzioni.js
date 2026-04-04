@@ -1,79 +1,24 @@
 // ==========================================
-// 1. GESTIONE NAVIGAZIONE (DESKTOP vs MOBILE)
+// 1. IL MOTORE DI REINDIRIZZAMENTO
 // ==========================================
 
-/**
- * Reindirizza all'URL corretto in base alla larghezza dello schermo.
- * @param {string} urlDesktop - Link per versione PC
- * @param {string} urlMobile - Link per versione Smartphone
- */
 function vaiAllArticolo(urlDesktop, urlMobile) {
-    // Soglia standard per mobile: 768px
-    if (window.innerWidth <= 768 && urlMobile) {
+    // Debug per vedere cosa succede in console (clicca F12 sul browser)
+    console.log("Larghezza schermo:", window.innerWidth);
+    console.log("URL Desktop:", urlDesktop);
+    console.log("URL Mobile:", urlMobile);
+
+    // Se siamo sotto i 768px E esiste un URL mobile, usa quello
+    if (window.innerWidth <= 768 && urlMobile && urlMobile !== "undefined" && urlMobile !== "") {
         window.location.href = urlMobile;
     } else {
+        // Altrimenti vai su quello desktop
         window.location.href = urlDesktop;
     }
 }
 
 // ==========================================
-// 2. GESTIONE MENU SIDEBAR E RICERCA
-// ==========================================
-
-function openMenu() {
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("overlay");
-    const menuIcon = document.getElementById("menuIcon");
-    
-    if (sidebar && overlay) {
-        // 100% su mobile, 37% su desktop
-        sidebar.style.width = (window.innerWidth <= 768) ? "100%" : "37%";
-        overlay.style.display = "block";
-        if (menuIcon) menuIcon.style.opacity = "0";
-        document.body.classList.add("menu-aperto");
-    }
-}
-
-function closeMenu() {
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("overlay");
-    const menuIcon = document.getElementById("menuIcon");
-    const searchInput = document.getElementById("searchInput");
-    const searchResults = document.getElementById("searchResults");
-    
-    if (sidebar) {
-        sidebar.style.width = "0";
-        if (overlay) overlay.style.display = "none";
-        if (menuIcon) menuIcon.style.opacity = "1";
-        
-        // Reset ricerca alla chiusura
-        if (searchInput) {
-            searchInput.style.display = "none";
-            searchInput.value = "";
-        }
-        if (searchResults) searchResults.innerHTML = "";
-        
-        document.body.classList.remove("menu-aperto");
-    }
-}
-
-function toggleSearch() {
-    const input = document.getElementById("searchInput");
-    if (!input) return;
-
-    if (input.style.display === "none" || input.style.display === "") {
-        input.style.display = "block";
-        input.focus();
-    } else {
-        input.style.display = "none";
-        input.value = "";
-        const results = document.getElementById("searchResults");
-        if (results) results.innerHTML = "";
-    }
-}
-
-// ==========================================
-// 3. CARICAMENTO ARTICOLI E RICERCA
+// 2. CARICAMENTO ARTICOLI (FETCH)
 // ==========================================
 
 let articoliData = [];
@@ -85,24 +30,58 @@ fetch('articoli.json')
         const grid = document.getElementById('articlesGrid');
         if (!grid) return;
         
+        grid.innerHTML = ""; // Pulisce la griglia prima di caricare
+
         articoli.forEach(art => {
-            grid.innerHTML += `
-                <article class="article-card" 
-                         onclick="vaiAllArticolo('${art.url}', '${art.url_mobile}')" 
-                         style="cursor: pointer;">
-                    <div class="article-image-container">
-                        <img src="${art.immagine}" alt="${art.categoria}" class="article-image">
-                    </div>
-                    <div class="article-content">
-                        <h3 class="article-category">${art.categoria}</h3>
-                        <p class="article-date">${art.data}</p>
-                        <h2 class="article-title">${art.titolo}</h2>
-                        <p class="article-text">${art.anteprima}</p>
-                    </div>
-                </article>`;
+            // CREIAMO L'ELEMENTO ARTICOLO
+            const article = document.createElement('article');
+            article.className = "article-card";
+            article.style.cursor = "pointer";
+            
+            // ASSEGNIAMO IL CLICK tramite la funzione corretta
+            article.onclick = function() {
+                vaiAllArticolo(art.url, art.url_mobile);
+            };
+
+            article.innerHTML = `
+                <div class="article-image-container">
+                    <img src="${art.immagine}" alt="${art.categoria}" class="article-image">
+                </div>
+                <div class="article-content">
+                    <h3 class="article-category">${art.categoria}</h3>
+                    <p class="article-date">${art.data}</p>
+                    <h2 class="article-title">${art.titolo}</h2>
+                    <p class="article-text">${art.anteprima}</p>
+                </div>
+            `;
+            grid.appendChild(article);
         });
     })
     .catch(err => console.error("Errore caricamento articoli:", err));
+
+// ==========================================
+// 3. GESTIONE MENU E RICERCA
+// ==========================================
+
+function openMenu() {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    if (sidebar && overlay) {
+        sidebar.style.width = (window.innerWidth <= 768) ? "100%" : "37%";
+        overlay.style.display = "block";
+        document.body.classList.add("menu-aperto");
+    }
+}
+
+function closeMenu() {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    if (sidebar) {
+        sidebar.style.width = "0";
+        if (overlay) overlay.style.display = "none";
+        document.body.classList.remove("menu-aperto");
+    }
+}
 
 function searchArticles() {
     const input = document.getElementById("searchInput").value.toLowerCase();
@@ -123,7 +102,7 @@ function searchArticles() {
         item.textContent = art.titolo;
         item.style.cursor = "pointer";
         
-        // Applica la logica mobile/desktop anche alla ricerca
+        // Logica di click anche per i risultati della ricerca
         item.onclick = () => vaiAllArticolo(art.url, art.url_mobile);
         
         resultsContainer.appendChild(item);
@@ -131,40 +110,13 @@ function searchArticles() {
 }
 
 // ==========================================
-// 4. NEWSLETTER E INIZIALIZZAZIONE
+// 4. INIZIALIZZAZIONE
 // ==========================================
 
-function openNewsletter() {
-    const nl = document.getElementById('newsletterOverlay');
-    if (nl) nl.classList.add('active');
-}
-
-function closeNewsletter() {
-    const nl = document.getElementById('newsletterOverlay');
-    if (nl) nl.classList.remove('active');
-}
-
 document.addEventListener("DOMContentLoaded", function() {
-    // Popup mostrato solo una volta per sessione
-    if (!sessionStorage.getItem('newsletterShown')) {
-        setTimeout(openNewsletter, 2000); // Apre dopo 2 secondi
-        sessionStorage.setItem('newsletterShown', 'true');
-    }
-
-    // Gestione chiusura menu su mobile (touchstart per reattività)
+    // Fix per il pulsante di chiusura su mobile
     const closeBtn = document.querySelector('.close-btn');
     if (closeBtn) {
-        closeBtn.addEventListener('touchstart', function(e) {
-            closeMenu();
-            e.preventDefault();
-        }, {passive: false});
-    }
-});
-
-// Aggiornamento dinamico larghezza sidebar al resize
-window.addEventListener('resize', () => {
-    const sidebar = document.getElementById("sidebar");
-    if (sidebar && sidebar.style.width !== "0px" && sidebar.style.width !== "") {
-        sidebar.style.width = (window.innerWidth <= 768) ? "100%" : "37%";
+        closeBtn.addEventListener('click', closeMenu);
     }
 });
