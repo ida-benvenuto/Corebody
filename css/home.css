@@ -2,7 +2,9 @@
     font-family: 'avenir';
     src: url('../font/Avenir_Book/Avenir\ Book.ttf') format('opentype');
 }
-
+.body {
+    max-width: 850px !important;
+}
 /* Affianca le scritte LATEST e CB */
 .latest-title {
     font-size: 58px;
@@ -565,6 +567,7 @@ immagine_iniziale .titolo {
     justify-content: center;
     align-items: center;
     position: relative;
+    z-index: 2000000;
 }
 
 .scritta_centro {
@@ -891,4 +894,11 @@ nav#sotto centro p {
   margin-bottom:8px;
   font-size: 11px;
   color: #222;
+}
+#backToTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  z-index: 9999; /* fondamentale: sopra a tutto */
 }
