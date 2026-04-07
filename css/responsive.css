@@ -337,20 +337,6 @@ height: 23px  !important;
     margin-bottom: 15px;
 }
 
-
-
-.blocco-hero {
-    height: 45vh !important; /* Ridotto da 65vh per compattare */
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-}
-.hero_bg{
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-     background-image: url("../immagini/Screenshot\ 2026-03-20\ alle\ 16.46.38.png");
-}
 nav ul destra img{
     margin: 2px;
     width: 20px !important ;
@@ -444,41 +430,50 @@ line-height: 1.4;
 font-size: 16px;
 letter-spacing: 0.02em;
 z-index: 10;
-}
-/* Il contenitore che definisce lo spazio dove si vede la foto */
+}/* Il "buco" nella pagina */
 .blocco-hero {
   position: relative;
   width: 100%;
-  height: 65vh; /* Altezza della tua "finestra" */
-  /* Questo comando è magico: crea un ritaglio che permette al fixed interno di funzionare */
-  clip-path: inset(0); 
+  height: 65vh; /* Regola questa altezza per decidere quanto spazio occupa la foto */
+  overflow: hidden;
+  clip-path: inset(0); /* Fondamentale per i browser moderni */
   z-index: 1;
-  margin: 0;
 }
 
+/* L'immagine che resta ferma */
 .hero-bg {
-  /* Torniamo a fixed ma all'interno del clip-path */
-  position: fixed; 
+  position: fixed; /* Resta incollata allo schermo */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  
   background-image: url("../Francesca_1°shoot/J1A7426.jpeg");
-  background-position: center;
   background-size: cover;
-  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: scroll; /* Mai usare fixed qui su mobile */
+  z-index: -1; /* Sta dietro a tutto */
   
-  /* Fondamentale: su mobile deve essere scroll */
-  background-attachment: scroll; 
-  
-  /* Deve stare dietro al ritaglio del padre */
-  z-index: -1; 
+  /* Forza il rendering hardware su iPhone/Android */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
-/* Correzione per i blocchi di testo affinché coprano l'immagine */
+
+/* IMPORTANTE: Assicurati che TUTTI i blocchi di testo abbiano questo */
+.cb-text-row, .cb-text-row_2, .latest-section, .chiusa {
+  position: relative;
+  z-index: 10; /* Devono essere più alti della foto */
+}
+/* Assicurati che il contenitore principale non blocchi la posizione degli elementi interni */
+.cb-main {
+  background-color: white;
+  overflow: visible !important; /* Rimuovi eventuali hidden */
+  position: relative;
+}
+
+/* Le sezioni di testo devono avere uno z-index alto per passare SOPRA l'immagine */
 .cb-text-row, .cb-text-row_2 {
   position: relative;
-  z-index: 5; /* Valore alto per stare SOPRA l'immagine sticky */
+  z-index: 10; 
   background-color: white !important;
 }
 }
