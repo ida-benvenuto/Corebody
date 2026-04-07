@@ -445,24 +445,40 @@ font-size: 16px;
 letter-spacing: 0.02em;
 z-index: 10;
 }
-.hero-bg {
-  /* Rimuoviamo position: absolute per usare sticky */
-  position: -webkit-sticky; /* Supporto per Safari */
-  position: sticky;
-  top: 0;
-  
+/* Il contenitore che definisce lo spazio dove si vede la foto */
+.blocco-hero {
+  position: relative;
   width: 100%;
-  /* Usa dvh per evitare problemi con la barra degli indirizzi mobile */
-  height: 100dvh; 
+  height: 65vh; /* Altezza della tua "finestra" */
+  /* Questo comando è magico: crea un ritaglio che permette al fixed interno di funzionare */
+  clip-path: inset(0); 
+  z-index: 1;
+  margin: 0;
+}
+
+.hero-bg {
+  /* Torniamo a fixed ma all'interno del clip-path */
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   
   background-image: url("../Francesca_1°shoot/J1A7426.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   
-  /* IMPORTANTE: Cambiamo fixed in scroll */
+  /* Fondamentale: su mobile deve essere scroll */
   background-attachment: scroll; 
   
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  z-index: 1;
+  /* Deve stare dietro al ritaglio del padre */
+  z-index: -1; 
+}
+/* Correzione per i blocchi di testo affinché coprano l'immagine */
+.cb-text-row, .cb-text-row_2 {
+  position: relative;
+  z-index: 5; /* Valore alto per stare SOPRA l'immagine sticky */
+  background-color: white !important;
 }
 }
