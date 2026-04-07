@@ -3,7 +3,7 @@
     src: url('../font/AvenirNext-UltraLight.ttf ')format('opentype');
 }
 h1{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
     font-weight:bold;
     font-size: 50pt;
     color: #00ff84;
@@ -307,10 +307,18 @@ h1{
 .left_griglia {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Due colonne uguali */
-    grid-template-rows: 1fr 1fr;    /* Due righe uguali */                 /* Spazio tra le celle */
-    padding: 60px;
+    grid-template-rows: 1fr 1fr;    /* Due righe uguali */ 
+    gap: 25px;                      /* Questo crea lo spazio tra le foto */
+    
+    padding: 20px;                  /* Spazio tra le foto e il bordo esterno */
     background-color: #ffffff;
     box-sizing: border-box;
+}
+.left_griglia img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;             /* Taglia l'immagine per riempire il quadrato senza deformarsi */
+    display: block;
 }
 /* Prima immagine: allineata a sinistra, larghezza contenuta */
 .left_griglia img:first-of-type {
@@ -555,4 +563,25 @@ h1{
     width: 100%;
     height: auto;
     display: block;
+}
+
+.left_griglia {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: auto;       /* Lascia che l'altezza si adatti alle foto */
+    
+    gap: 40px;                      /* Aumenta il gap per un look più "about" */
+    padding: 40px;                  /* Margine esterno alla griglia */
+    
+    background-color: #ffffff;
+    box-sizing: border-box;
+    align-items: start;             /* Evita che le foto si allunghino se hanno altezze diverse */
+}
+
+/* Fondamentale: controlla come si comportano le foto */
+.left_griglia img {
+    width: 100%;
+    height: auto;                   /* Mantiene le proporzioni originali */
+    display: block;
+    object-fit: cover;
 }
