@@ -308,9 +308,9 @@ h1{
     display: grid;
     grid-template-columns: 1fr 1fr; /* Due colonne uguali */
     grid-template-rows: 1fr 1fr;    /* Due righe uguali */ 
-    gap: 25px;                      /* Questo crea lo spazio tra le foto */
+    gap: 40px;                      /* Questo crea lo spazio tra le foto */
     
-    padding: 20px;                  /* Spazio tra le foto e il bordo esterno */
+    padding: 40px;                  /* Spazio tra le foto e il bordo esterno */
     background-color: #ffffff;
     box-sizing: border-box;
 }
@@ -355,18 +355,6 @@ h1{
    margin-left: 40px; 
 }
 
-
-/* Responsive per schermi piccoli */
-@media (max-width: 900px) {
-    .left_griglia {
-        padding: 40px 20px;
-    }
-    .left_griglia img:first-of-type,
-    .left_griglia img:last-of-type,
-    .left_griglia .caption {
-        width: 100%;       /* Su mobile meglio occupare tutto lo spazio */
-    }
-}
 
 /* ══════════════════════════════════════════════════════════
    PARTE DESTRA - GRIGLIA SFALSATA (Sotto la foto a sinistra)
@@ -414,16 +402,6 @@ h1{
     text-align: left;
     margin-top: 20px;       /* Spazio tra foto e testo */
     width: 100%;            /* Allineata alla larghezza della foto sopra */
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-    .right_griglia_due {
-        padding: 20px;
-    }
-    .hh {
-        display: none;      /* Su mobile eliminiamo il vuoto per non allungare troppo */
-    }
 }
 /* ══════════════════════════════════════════════════════════
    LAYOUT DOPPIA FOTO VERTICALE (Destra/Sinistra Pagina)
@@ -565,18 +543,6 @@ h1{
     display: block;
 }
 
-.left_griglia {
-    display: grid;
-    grid-template-columns: 1fr 1fr; 
-    grid-template-rows: auto;       /* Lascia che l'altezza si adatti alle foto */
-    
-    gap: 40px;                      /* Aumenta il gap per un look più "about" */
-    padding: 40px;                  /* Margine esterno alla griglia */
-    
-    background-color: #ffffff;
-    box-sizing: border-box;
-    align-items: start;             /* Evita che le foto si allunghino se hanno altezze diverse */
-}
 
 /* Fondamentale: controlla come si comportano le foto */
 .left_griglia img {
@@ -584,4 +550,93 @@ h1{
     height: auto;                   /* Mantiene le proporzioni originali */
     display: block;
     object-fit: cover;
+}
+
+.split-section-fixed {
+    display: flex;
+    justify-content: center; /* Centra il "blocco" delle due foto unite */
+    align-items: center;
+    
+    /* Gestione Margini: 13 + 13 = 26. 100 - 26 = 74vh di altezza per le foto */
+    height: 86vh; 
+    margin-top: 13vh;
+    margin-bottom: 13vh;
+    width: 100%;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.split-section-fixed img {
+    height: 100%;    /* Entrambe hanno la stessa altezza (quella della sezione) */
+    width: auto;     /* Mantengono la proporzione originale (niente tagli) */
+    display: block;  /* Toglie spazi bianchi alla base */
+    object-fit: contain;
+}
+
+/* Rimuove eventuali spazi tra le immagini */
+.img-left {
+    padding: 0;
+    margin: 0;
+}
+
+.img-right {
+    padding: 0;
+    margin: 0;
+}
+
+
+/* --- SEZIONE EDITORIALE SFALSATA --- */
+.editorial-staggered {
+display: flex;
+width: 100%;
+padding: 4vh 3%;
+box-sizing: border-box;
+background-color: #fff;
+/* gap: 5%; */
+}
+
+/* Colonna di Sinistra: Allineata in alto */
+.photo-top-left {
+    flex: 1; /* Prende metà spazio */
+    display: flex;
+    justify-content: center; /* Centra la foto nella sua colonna */
+    align-items: flex-start; /* La attacca in alto */
+}
+
+.photo-top-left img {
+    width: 100%;
+    max-width: 450px; /* Grandezza proporzionata come nel PDF */
+    height: auto;
+    display: block;
+}
+
+/* Colonna di Destra: Allineata in basso */
+.photo-bottom-right {
+    flex: 1; /* Prende l'altra metà */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Spinge tutto verso il basso */
+    align-items: center; /* Centra orizzontalmente */
+    padding-top: 25vh; /* Crea l'effetto di sfalsamento profondo */
+}
+
+.photo-bottom-right img {
+    width: 100%;
+    max-width: 350px; /* Più piccola di quella sinistra, come nel PDF */
+    height: auto;
+    display: block;
+}
+
+/* Sovrascriviamo la caption generale solo per questa sezione */
+.editorial-staggered .caption {
+    position: static; /* Rimuove l'absolute che rompeva il layout */
+    font-family: 'Avenir', sans-serif;
+    font-size: 11px;
+    color: #000; /* Testo nero su sfondo bianco */
+    text-transform: none;
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 350px; /* Si allinea alla larghezza della foto sotto */
+    text-align: left;
 }
