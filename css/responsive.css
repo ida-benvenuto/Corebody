@@ -422,7 +422,9 @@ display: flex;
 align-items: flex-end;
 }
 .submission-container {
-    background-image: url('../Francesca_2°shoot/J1A0057.jpg');
+    background-image: url('../Francesca_2°shoot/J1A0057\ copia.jpg');
+    align-items: start;
+    text-align: end;
 }
 .container {
 display: flex;
@@ -431,5 +433,36 @@ align-items: end;
 margin-right: 30px;
 text-align: end;
 
+}
+
+.content-overlay {
+font-family: 'avenir', sans-serif;
+color: #000;
+padding: 28px;
+max-width: 600px;
+line-height: 1.4;
+font-size: 16px;
+letter-spacing: 0.02em;
+z-index: 10;
+}
+.hero-bg {
+  /* Rimuoviamo position: absolute per usare sticky */
+  position: -webkit-sticky; /* Supporto per Safari */
+  position: sticky;
+  top: 0;
+  
+  width: 100%;
+  /* Usa dvh per evitare problemi con la barra degli indirizzi mobile */
+  height: 100dvh; 
+  
+  background-image: url("../Francesca_1°shoot/J1A7426.jpeg");
+  
+  /* IMPORTANTE: Cambiamo fixed in scroll */
+  background-attachment: scroll; 
+  
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 1;
 }
 }
