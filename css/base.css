@@ -131,6 +131,7 @@ nav ul {
         
         .newsletter-overlay.active {
             display: flex;
+            z-index: 10000000;
         }
         
         .newsletter-popup {

@@ -155,3 +155,72 @@ function toggleSearch() {
       backToTopBtn.style.display = "none";
     }
   });
+
+document.addEventListener("DOMContentLoaded", function() {   
+     // 1. Controlliamo se nella sessione attuale il popup è già stato mostrato    
+     const isPopupShown = sessionStorage.getItem('newsletterShown');    
+     // 2. Se non è mai stato mostrato in questa sessione, lo attiviamo    
+     if (!isPopupShown) {      
+        
+        openNewsletter();        // 3. Salviamo subito l'informazione per evitare che riappaia ricaricando la pagina        
+        sessionStorage.setItem('newsletterShown', 'true');   
+    
+}});
+function openNewsletter() {
+    document.getElementById('newsletterOverlay').classList.add('active');
+}
+
+function closeNewsletter() {
+    document.getElementById('newsletterOverlay').classList.remove('active');
+}
+
+// URL del tuo Google Apps Script - SOSTITUISCI con il tuo URL dopo il deploy
+var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDJ-gAtJx77iI1iO7aeW-AGVsubv1rLG3pvuxhnmGOBaS9eFBUrlx1F7blMN7fiRD3sg/exec';
+
+function submitNewsletter(event) {
+    event.preventDefault();
+    var email = document.getElementById('newsletterEmail').value;
+    var submitBtn = document.querySelector('.newsletter-popup button');
+
+    // Disabilita il bottone durante l'invio
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'INVIO IN CORSO...';
+
+    // Invia richiesta a Google Apps Script
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email })
+    })
+    .then(function() {
+        console.log('Richiesta inviata con successo!');
+
+        // Mostra messaggio di successo
+        document.getElementById('newsletterForm').style.display = 'none';
+        document.getElementById('newsletterSuccess').classList.add('show');
+
+        // Salva che l'utente si è iscritto
+        localStorage.setItem('newsletterSubscribed', 'true');
+
+        // Chiudi popup dopo 2 secondi
+        setTimeout(() => {
+            closeNewsletter();
+        }, 2000);
+    })
+    .catch(function(error) {
+        console.error('Errore:', error);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'ISCRIVITI';
+        alert('Si è verificato un errore. Riprova più tardi.');
+    });
+}
+
+// Chiudi popup cliccando fuori
+document.getElementById('newsletterOverlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeNewsletter();
+    }
+});

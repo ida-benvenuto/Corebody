@@ -651,7 +651,7 @@ immagine_iniziale .titolo {
             position: absolute;
             top: 15px;
             right: 20px;
-            font-size: 28px;
+            font-size: 24px;
             cursor: pointer;
             color: #333;
             transition: color 0.3s;
@@ -663,7 +663,7 @@ immagine_iniziale .titolo {
         
         .newsletter-popup h2 {
             font-family: 'secondo_font', sans-serif;
-            font-size: 60px;
+            font-size: 48px;
             margin-bottom: 0px;
             letter-spacing: 2px;
             color: #852936;
@@ -678,7 +678,7 @@ immagine_iniziale .titolo {
         }
         
         .newsletter-popup input[type="email"] {
-            padding: 20px;
+            padding: 27px;
             border: 1px solid #ccc;
             font-size: 24px;
             font-family: 'avenir', sans-serif;
@@ -696,7 +696,7 @@ immagine_iniziale .titolo {
              background: #e1aebc;
             color: #852936;
             border: none;
-            font-size: 28px;
+            font-size: 24px;
             letter-spacing: 2.5px;
             cursor: pointer;
             font-family: 'avenir', sans-serif;
@@ -837,9 +837,9 @@ margin-bottom: 3px;
 
       .newsletter-popup p {
             font-family: 'avenir', sans-serif;
-            font-size: 20px;
+            font-size: 17px;
             color:black;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             margin-block-start: 0;
         }
         
