@@ -6,8 +6,8 @@
 
 .shop-wrapper {
     display: grid;
+    grid-template-columns: repeat(15, 2fr);
     /* Griglia a 12 colonne per massima precisione, tipica dei layout moda */
-    grid-template-columns: repeat(12, 1fr);
     gap: 20px;
 }
 
